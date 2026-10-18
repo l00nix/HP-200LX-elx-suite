@@ -4,11 +4,7 @@
 #include "ctl.h"
 #include "elx.h"
 #define DASH_VERSION "0.1"
-#ifdef __WATCOMC__
-#define DASH_NAME "LXdash"
-#else
 #define DASH_NAME "ELXdash"
-#endif
 #define DK_LEFT 256
 #define DK_RIGHT 257
 #define DK_UP 258

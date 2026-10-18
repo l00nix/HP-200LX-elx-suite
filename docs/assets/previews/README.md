@@ -7,7 +7,6 @@ keeping versions and capture conditions explicit.
 | Image | Source |
 | --- | --- |
 | ELXdash | 0.1 shared renderer in demo mode; synthetic values |
-| LXdash | 0.1 compiled DOS EXE under mocked DOS/HP services; demo mode |
 | ELXbat | 0.1.2 renderer, offline synthetic firmware snapshot |
 | ELX Commander | 0.1 native ELKS binary under elksemu; rendered terminal output |
 | ELXcap | 0.1 BMP from an offline ELXbat framebuffer, lossless PNG viewing conversion |

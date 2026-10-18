@@ -1,7 +1,7 @@
 # Contributing
 
 Keep changes compatible with the 8086 and the HP 200LX's memory limits. Keep
-DOS and ELKS platform access separate while sharing drawing and control logic.
+ELKS hardware access separate from host simulation and drawing/control logic.
 Use the tool's existing test and build instructions; record physical testing
 separately from mocked or emulator checks.
 

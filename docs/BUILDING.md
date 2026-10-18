@@ -1,6 +1,6 @@
 # Building the ELX suite
 
-Keep the sibling directories under `tools/` together: the dashboards reuse the
+Keep the sibling directories under `tools/` together: the dashboard reuses the
 control and graphics sources directly. Source builds do not install anything
 on a palmtop or change an existing ELKS tree.
 
@@ -39,19 +39,6 @@ instruction/memory audit evidence. Targets explicitly select i8086.
 For emulator tests, use an elksemu with correct 32-bit ELKS timeval conversion
 on a 64-bit host. Commander includes an isolated-emulator preparation helper;
 it does not patch the shared toolchain. See its source README.
-
-## DOS LXdash
-
-Open Watcom 2 with DOS headers and 16-bit libraries is required. The existing
-build script uses the Linux x64 host binaries:
-
-```sh
-cd tools/elx-dash
-WATCOM=/path/to/open-watcom sh build-dos.sh
-```
-
-This creates `build-dos/LXDASH.EXE`, a real-mode 8086 small-model executable.
-No DOS extender is required. The release manifest identifies the compiler build.
 
 ## Release preparation
 

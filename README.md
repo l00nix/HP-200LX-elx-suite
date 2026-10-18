@@ -1,9 +1,9 @@
 # ELX tool suite for the HP 200LX
 
 Small native utilities for the HP 200LX running
-[ELKS Linux on HP 200LX](https://github.com/l00nix/elks-on-hp200lx), with
-**LXdash** as the DOS companion. Battery monitoring, hardware controls, screenshots and a classic
-two-panel file manager—without Nano-X.
+[ELKS Linux on HP 200LX](https://github.com/l00nix/elks-on-hp200lx). Battery
+monitoring, hardware controls, screenshots and a classic two-panel file manager
+without Nano-X.
 
 **Initial prerelease:** current builds have automated/emulator checks but still
 need physical HP validation. The original ELXstat/ELXbat 0.1 were observed running
@@ -22,14 +22,13 @@ labelled with its software-preview origin.
 | [ELXbat](docs/tools/elxbat.md) | 0.1.2 | ELKS | Large battery-voltage gauges and warning markers |
 | [ELXctl](docs/tools/elxctl.md) | 0.1 | ELKS | Command-line hardware controls |
 | [ELXdash](docs/tools/elxdash.md) | 0.1 | ELKS | Battery gauges and interactive controls |
-| [LXdash](docs/tools/lxdash.md) | 0.1 | DOS | The dashboard as a real-mode 8086 EXE |
 | [ELX Commander](docs/tools/elxcommander.md) | 0.1 | ELKS | Two-panel text file manager (`elxcmd`) |
 | [ELXcap](docs/tools/elxcap.md) | 0.1 | ELKS | Lossless BMP/PBM screen captures |
 
 ## Get the binaries
 
 The **Releases** section contains `ELX-Suite-0.1.0-binaries.zip` with the current
-seven binaries, plus individual tool/dashboard packages with source and build
+six ELKS binaries, plus individual tool/dashboard packages with source and build
 evidence. `SHA256SUMS` checks release assets; `BINARY-MANIFEST.json` identifies
 each executable. The suite version does not replace the individual tool versions.
 
@@ -38,30 +37,20 @@ transfer method, then `chmod 755` them. Start graphics tools from the local HP
 text console. Firmware tools need readable `/dev/kmem`, normally as root, and
 a firmware-aware HP 200LX ELKS kernel. Commander also works over serial.
 
-For DOS, copy `DOS/LXDASH.EXE` and run it at the DOS prompt. It is a foreground
-program, not a System Manager EXM or TSR. No installer modifies a kernel, CF
+No installer modifies a kernel, CF
 image or startup configuration. ELXcap's optional hotkey needs a separate kernel
 integration; ordinary and delayed captures do not.
 
-## ELXdash and LXdash — how to use
+## ELXdash — how to use
 
 ```sh
 ./elxdash
 ./elxdash --demo
 ```
 
-```bat
-LXDASH.EXE
-LXDASH.EXE --demo
-```
-
 ![ELXdash software demo](docs/assets/previews/elxdash-demo.png)
 
 *ELXdash 0.1: actual renderer in demo mode, synthetic readings.*
-
-![LXdash software demo](docs/assets/previews/lxdash-demo.png)
-
-*LXdash 0.1: compiled DOS executable framebuffer, mocked DOS/HP services, demo mode.*
 
 Use ![Tab](docs/assets/keys/tab.svg) to select, then
 ![Left](docs/assets/keys/left.svg) / ![Right](docs/assets/keys/right.svg) or
@@ -72,7 +61,7 @@ Use ![Tab](docs/assets/keys/tab.svg) to select, then
 Contrast and volume gauges reflect read-back values. Text zoom is queued until
 exit; annunciator preference and BIOS timeout also have selectable controls.
 **BIOS timeout is not ELKS auto-sleep.** Battery gauges are read-only volts, not
-charge percentages. [ELXdash guide](docs/tools/elxdash.md) · [LXdash guide](docs/tools/lxdash.md)
+charge percentages. [ELXdash guide](docs/tools/elxdash.md)
 
 ## ELXbat — how to use
 
@@ -162,14 +151,12 @@ requires the included kernel integration and is **not available on an unchanged
 - [Preview provenance](docs/assets/previews/README.md): interim images to replace after hardware testing.
 - `tools/elx-utils`: ELXstat, ELXbat and shared battery/graphics code.
 - `tools/elx-ctl`: command planning and hardware controls.
-- `tools/elx-dash`: ELXdash/LXdash shared interface and platform backends.
+- `tools/elx-dash`: ELXdash interface and ELKS/host platform backends.
 - `tools/elx-commander`, `tools/elx-cap`: file manager and capture utility.
 
 ## License
 
 Project code: [GPL-2.0-or-later](LICENSE). The reused font has its own
-[license](docs/FONT-LICENSE). LXdash links the Open Watcom runtime; its source
-is available under the [Sybase Open Watcom Public License](docs/WATCOM-LICENSE.txt)
-at [Open Watcom](https://github.com/open-watcom/open-watcom-v2).
+[license](docs/FONT-LICENSE).
 No HP ROM dump, DOS system files, original BATG/CXCTL/GEMCAP code or credentials
 are included.

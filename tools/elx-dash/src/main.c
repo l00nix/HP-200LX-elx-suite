@@ -19,11 +19,6 @@ int main(int argc,char **argv) {
                  "BIOS timeout: 30-second steps, Off..3604s. Not ELKS auto-sleep.\n"
                  "Battery triangles: nominal low / solid critical; firmware flags shown.\n"
                  "--demo uses synthetic values and never changes HP settings.");
-#ifdef __WATCOMC__
-            puts("Open Watcom runtime source is available under the Sybase Open Watcom\n"
-                 "Public License: https://github.com/open-watcom/open-watcom-v2\n"
-                 "See WATCOM-LICENSE.txt in the distribution.");
-#endif
             return 0;
         } else if(!strcmp(argv[i],"--version")) {puts(DASH_NAME " " DASH_VERSION);return 0;}
 #if (!defined(__ia16__) && !defined(__WATCOMC__)) || defined(DASH_TEST)

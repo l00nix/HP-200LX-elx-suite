@@ -9,8 +9,7 @@
     "ELXctl": "0.1",
     "ELX Commander": "0.1",
     "ELXcap": "0.1",
-    "ELXdash": "0.1",
-    "LXdash": "0.1"
+    "ELXdash": "0.1"
   },
   "binaries": {
     "ELKS/elxstat": {
@@ -36,10 +35,6 @@
     "ELKS/elxcap": {
       "bytes": 9056,
       "sha256": "33eccc5742da65066349dc9c4429149e3fefa95a6f7851ce298c8960765392fa"
-    },
-    "DOS/LXDASH.EXE": {
-      "bytes": 29396,
-      "sha256": "037055b9a0b5d339dfa54e7cb12f62ca9652cb69b3deb72be1312a15b5c28558"
     }
   },
   "status": "Initial prerelease; see GitHub Releases for published assets",

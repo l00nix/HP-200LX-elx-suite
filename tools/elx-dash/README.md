@@ -1,9 +1,7 @@
-# ELXdash 0.1 / LXdash 0.1
+# ELXdash 0.1
 
-A light-theme, standalone 640×200 HP 200LX dashboard. ELXdash runs under
-firmware-aware ELKS; LXdash is a real-mode 8086 DOS EXE. Both share the drawing
-and control model. Neither needs Nano-X, a mouse or a new kernel. LXdash is a
-foreground DOS program, not a System Manager EXM or resident hotkey utility.
+A light-theme, standalone 640×200 HP 200LX dashboard for firmware-aware ELKS.
+It needs neither Nano-X nor a mouse.
 
 ## Run
 
@@ -14,16 +12,9 @@ chmod 755 elxdash
 ./elxdash
 ```
 
-DOS, from the DOS prompt on the HP 200LX:
-
-```bat
-LXDASH.EXE
-```
-
 `--demo` runs the same interface with synthetic values and no HP setting
 changes. It still switches to graphics and restores the text display afterward.
-LXdash demo can run on a compatible non-HP DOS PC/emulator. The monochrome
-pixel polarity is chosen for the HP LCD and can appear inverted on ordinary CGA.
+The monochrome pixel polarity is chosen for the HP LCD and can appear inverted on ordinary CGA.
 `--help` and `--version` do not access hardware.
 
 ## Controls
@@ -82,18 +73,9 @@ HP 200LX ROM, and the graphics-console ownership ioctls. Start from a logical
 80×25 text page. Serial sessions are rejected. It restores text mode and terminal
 input flags on normal exit, but clears the text screen, like ELXbat.
 
-LXdash identifies the HP from its ROM before any HP-specific BIOS calls or
-indexed-register access. It saves/restores the 4000-byte text page, cursor
-position and shape. Only text page zero is supported. Run it as a foreground
-DOS program; concurrent graphics programs and display-hooking TSRs need separate
-testing. Volume read-back preserves the indexed-port selector and only reads
-register 1Eh; it does not write clock/power bits.
-
-**Physical HP testing is pending for all three new builds.** Automated tests use
-host simulation, actual ELKS binaries in elksemu, mocked DOS/HP services around
-the compiled DOS EXE, and isolated ROM comparison paths. These do not establish
-real firmware/driver timing, battery freshness, sleep behavior, or actual DOS
-compatibility. No palmtop, CF card, installed kernel or startup file was changed.
+**Physical HP testing is pending.** Automated checks use host simulation, native
+ELKS binaries in elksemu and isolated ROM comparison paths. They do not establish
+real firmware/driver timing, battery freshness or sleep behavior.
 
 ## Build
 
@@ -103,14 +85,10 @@ Keep the sibling `elx-dash`, `elx-ctl` and `elx-utils` directories together.
 cd elx-dash
 make test
 ELKS=/path/to/configured/elks sh build-elks.sh
-WATCOM=/path/to/open-watcom sh build-dos.sh
 ```
 
 The ELKS toolchain is ia16-elf-gcc targeting i8086, small model, 2048-byte heap
-and 4096-byte stack. DOS uses Open Watcom 2, `-0 -ms -os -bt=dos`, 4096-byte stack,
-no extender. The DOS compiler is obtained from the Open Watcom project's public
-release: https://github.com/open-watcom/open-watcom-v2/releases/tag/Current-build
-Build evidence records the actual compiler version used.
+and 4096-byte stack. Build evidence records the compiler version used.
 
 Host preview (synthetic data, actual renderer):
 
@@ -120,8 +98,6 @@ build-host/elxdash --demo --preview dash.pbm
 
 `--script` is a host/test-build-only key sequence for deterministic UI tests.
 `tests/test-native.sh` requires `ELKS` and `EMU` (an LP64-compatible elksemu).
-`tests/test_dos_exe.py LXDASH.EXE` requires Unicorn and executes the compiled EXE
-with mocked DOS/HP services; it is not a full DOS emulator.
 `tests/test_rom_thresholds.py PRIVATE-ROM.BIN` takes a private BIOS 2.14 capture.
 
 GPL-2.0-or-later for project code; see COPYING. The reused ELKSWeb font retains

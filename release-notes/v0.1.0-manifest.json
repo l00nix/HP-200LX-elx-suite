@@ -2,7 +2,7 @@
   "suite": "0.1.0",
   "prerelease": true,
   "visibility": "private",
-  "intended_repository": "l00nix/elx-suite",
+  "intended_repository": "l00nix/HP-200LX-elx-suite",
   "versions": {
     "ELXstat": "0.1",
     "ELXbat": "0.1.2",
@@ -44,5 +44,5 @@
   },
   "status": "Initial prerelease; see GitHub Releases for published assets",
   "hardware_testing": "Current builds pending; see docs/TESTING.md",
-  "repository": "https://github.com/l00nix/elx-suite"
+  "repository": "https://github.com/l00nix/HP-200LX-elx-suite"
 }

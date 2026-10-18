@@ -42,7 +42,7 @@ framebuffer fixture. Not a screenshot captured on physical hardware.*
 The log reports a PID. From serial, `kill -10 PID` requests a capture;
 `kill PID` stops the listener. Replace PID with the reported number.
 
-The GEMCAP-style ![Alt](../assets/keys/alt.svg) + ![.](../assets/keys/period.svg) shortcut requires the
+The GEMCAP-style ![Alt + .](../assets/keys/alt-period.svg) shortcut requires the
 **optional kernel integration**. It does not work on an unchanged 3.8 beta1 kernel:
 
 ```sh
@@ -55,7 +55,7 @@ No kernel binary is installed by the release.
 
 CGA mode 6 is copied directly. Modes 2/3 are reconstructed as the full logical
 80×25 text page; cursor, blink timing, LCD zoom/pan and hardware annunciators
-are not reproduced. Global ![ON](../assets/keys/on.svg) + ![/](../assets/keys/slash.svg) inversion is not
+are not reproduced. Global ![ON + /](../assets/keys/on-slash.svg) inversion is not
 captured; choose `-i` when wanted. Mode 7 is unsupported in 0.1.
 
 [Full capture coverage and limitations](../../tools/elx-cap/README.md) · [Suite](../../README.md)

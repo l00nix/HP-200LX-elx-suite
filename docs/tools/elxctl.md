@@ -40,8 +40,8 @@ it. `--simulate` uses a labelled software model with no HP hardware access.
 *Terminal rendering of actual simulation output, not an HP screenshot.*
 
 Firmware timeout is **not ELKS auto-sleep**. Mode 7 supports only 80x25 and
-40x16 zoom. Extreme contrast may be hard to read; the HP ![ON](../assets/keys/on.svg) +
-![+](../assets/keys/plus.svg) / ![−](../assets/keys/minus.svg) contrast controls remain available.
+40x16 zoom. Extreme contrast may be hard to read; the HP ![ON + +](../assets/keys/on-plus.svg) /
+![ON + −](../assets/keys/on-minus.svg) contrast controls remain available.
 
 No charging, serial-power, LCD-power or clock controls are included. Physical
 HP validation is pending. [Full notes](../../tools/elx-ctl/README.md) · [Suite](../../README.md)

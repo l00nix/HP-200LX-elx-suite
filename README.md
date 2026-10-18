@@ -1,7 +1,8 @@
-# ELX suite for the HP 200LX
+# ELX tool suite for the HP 200LX
 
-Small native utilities for the HP 200LX running ELKS, with **LXdash** as the
-DOS companion. Battery monitoring, hardware controls, screenshots and a classic
+Small native utilities for the HP 200LX running
+[ELKS Linux on HP 200LX](https://github.com/l00nix/elks-on-hp200lx), with
+**LXdash** as the DOS companion. Battery monitoring, hardware controls, screenshots and a classic
 two-panel file manager—without Nano-X.
 
 **Initial prerelease:** current builds have automated/emulator checks but still
@@ -9,7 +10,7 @@ need physical HP validation. The original ELXstat/ELXbat 0.1 were observed runni
 on the palmtop; that does not validate the newer builds. Every image below is
 labelled with its software-preview origin.
 
-[Download releases](https://github.com/l00nix/elx-suite/releases) ·
+[Download releases](https://github.com/l00nix/HP-200LX-elx-suite/releases) ·
 [Tool guides](docs/tools) · [Build from source](docs/BUILDING.md) ·
 [Testing status](docs/TESTING.md)
 
@@ -151,7 +152,7 @@ From an existing serial shell, capture the screen currently on the HP:
 *ELXcap BMP from an offline ELXbat framebuffer, losslessly converted to PNG for viewing.*
 
 Delayed capture works without kernel changes. The optional
-![Alt](docs/assets/keys/alt.svg) + ![Period](docs/assets/keys/period.svg) hotkey
+![Alt + .](docs/assets/keys/alt-period.svg) hotkey
 requires the included kernel integration and is **not available on an unchanged
 3.8 beta1 kernel**. [Capture instructions](docs/tools/elxcap.md)
 

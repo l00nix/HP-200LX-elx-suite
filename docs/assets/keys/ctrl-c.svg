@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="122" height="28" viewBox="0 0 122 28" role="img" aria-label="Ctrl + C keys">
+<title>Ctrl + C keys</title>
+<g><rect x="1" y="2" width="64" height="25" rx="5" fill="#adb5bd"/><rect x="1" y="1" width="64" height="23" rx="5" fill="#f8f9fa" stroke="#495057"/><text x="33.0" y="17" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" font-weight="600" fill="#212529">Ctrl</text></g>
+<path d="M 74 13 H 82 M 78 9 V 17" fill="none" stroke="#6e7781" stroke-width="2" stroke-linecap="round"/>
+<g transform="translate(90 0)"><rect x="1" y="2" width="30" height="25" rx="5" fill="#adb5bd"/><rect x="1" y="1" width="30" height="23" rx="5" fill="#f8f9fa" stroke="#495057"/><text x="16.0" y="17" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" font-weight="600" fill="#212529">C</text></g>
+</svg>

@@ -1,6 +1,6 @@
 # Publishing releases
 
-Repository: **l00nix/elx-suite**, private. Keep current experimental builds
+Repository: **l00nix/HP-200LX-elx-suite**, private. Keep current experimental builds
 marked as prereleases until physical HP validation supports a stable release.
 
 1. Update tool guides, preview captions, testing status and release notes.

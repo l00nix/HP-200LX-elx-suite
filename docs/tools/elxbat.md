@@ -18,7 +18,7 @@ an HP firmware-aware ELKS kernel and readable `/dev/kmem` (normally root).
 | --- | --- |
 | ![R](../assets/keys/r.svg) | Reread the firmware cache |
 | ![Q](../assets/keys/q.svg) or ![Esc](../assets/keys/esc.svg) | Exit graphics |
-| ![Ctrl](../assets/keys/ctrl.svg) + ![C](../assets/keys/c.svg) | Stop text watch or exit through cleanup |
+| ![Ctrl + C](../assets/keys/ctrl-c.svg) | Stop text watch or exit through cleanup |
 
 ![ELXbat with nominal warning markers](../assets/previews/elxbat-offline.png)
 
@@ -31,7 +31,7 @@ NiCad; backup 2.70 V on BIOS 2.14. The solid triangle is nominal main critical
 clear flags are shown independently. Values are volts, not charge percentages.
 
 The program never changes battery policy or thresholds. Global LCD inversion
-remains controlled by ![ON](../assets/keys/on.svg) + ![/](../assets/keys/slash.svg); use the normal LCD polarity
+remains controlled by ![ON + /](../assets/keys/on-slash.svg); use the normal LCD polarity
 for the default light appearance. The 0.1.2 release awaits physical HP testing.
 
 [Threshold evidence](../../tools/elx-utils/THRESHOLDS.md) · [Full notes](../../tools/elx-utils/README.md) · [Suite](../../README.md)

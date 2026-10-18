@@ -23,11 +23,19 @@ int dash_init(struct dashboard *d,int demo) {
 int dash_refresh(struct dashboard *d) {
     struct ctl_state s;struct elx_status b;
     if(dash_read(&s,&b)<0) {
-        d->failed=1;strcpy(d->message,"READ ERROR: values stale; editing disabled; Q to exit");return -1;
+        d->failed=d->power_failed=1;strcpy(d->message,"READ ERROR: values stale; editing disabled; Q to exit");return -1;
     }
     d->state=s;d->battery=b;
     if(d->failed)strcpy(d->message,"Read recovered; current firmware cache shown");
-    d->failed=0;return 0;
+    d->failed=d->power_failed=0;return 0;
+}
+int dash_poll_power(struct dashboard *d) {
+    unsigned char flags=0;int stale,changed;
+    stale=dash_read_power(&flags)<0;
+    changed=stale!=d->power_failed || (!stale && ((flags^d->battery.bda[0xd4])&ELX_POWER_MASK));
+    if(!stale)d->battery.bda[0xd4]=(d->battery.bda[0xd4]&~ELX_POWER_MASK)|(flags&ELX_POWER_MASK);
+    d->power_failed=stale;
+    return changed;
 }
 static int apply(struct dashboard *d,struct ctl_request *r) {
     struct ctl_plan p;struct ctl_state before=d->state;

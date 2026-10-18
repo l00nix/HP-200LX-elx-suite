@@ -1,4 +1,4 @@
-# ELXstat 0.1 and ELXbat 0.1.2
+# ELXstat 0.1 and ELXbat 0.1.3
 
 Native HP 200LX utilities for the ELKS toolbox. These are experimental,
 read-only battery/status utilities. User photos confirm that both 0.1 utilities
@@ -16,7 +16,7 @@ ON+/ remains available to invert the display manually. ELXstat stays at 0.1.
 The updated binary's appearance still needs confirmation on the palmtop.
 The photos do not establish battery-cache freshness or complete exit/sleep testing.
 
-## ELXbat 0.1.2 warning markers
+## Warning markers (introduced in ELXbat 0.1.2)
 
 Outlined triangles show nominal low-battery thresholds: 2.20 V for configured
 alkaline main batteries, 2.30 V for configured NiCad, and 2.70 V for backup on
@@ -199,3 +199,18 @@ instruction audit derive from ELKSWeb (GPL-2.0-or-later). The embedded regular f
 is ELKSWeb's X.Org helvR08 ASCII subset; its Adobe/DEC notices and redistribution
 terms are retained in FONT-LICENSE and src/font.h. Battery measurements/status
 are read only. Graphics mode and terminal input changes are temporary UI operations.
+
+## Automatic power indicator
+
+The graphical display checks the firmware power-status byte once per second,
+independently of the five-second default gauge refresh. The plug with a short
+cable means external power; a battery outline means battery power. A lightning
+bolt appears only when the firmware reports active charging, including fast
+charging. Enabled-but-inactive charging does not show a bolt. The battery
+outline is a power-source symbol, not a remaining-charge estimate.
+
+A read failure replaces the symbol with `?` and labels the power status unknown.
+The indicator recovers after a successful read. Power changes redraw only the
+status strip, with no full-screen flash. Reads do not change any power or charging
+settings. Firmware-cache update latency is unknown until hardware plug/unplug
+testing; a one-second poll does not guarantee one-second physical detection.

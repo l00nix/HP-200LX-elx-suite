@@ -19,15 +19,15 @@ labelled with its software-preview origin.
 | Tool | Version | System | Purpose |
 | --- | --- | --- | --- |
 | [ELXstat](docs/tools/elxstat.md) | 0.1 | ELKS | Read-only firmware and system status |
-| [ELXbat](docs/tools/elxbat.md) | 0.1.2 | ELKS | Large battery-voltage gauges and warning markers |
+| [ELXbat](docs/tools/elxbat.md) | 0.1.3 | ELKS | Large battery-voltage gauges and warning markers |
 | [ELXctl](docs/tools/elxctl.md) | 0.1 | ELKS | Command-line hardware controls |
-| [ELXdash](docs/tools/elxdash.md) | 0.1 | ELKS | Battery gauges and interactive controls |
+| [ELXdash](docs/tools/elxdash.md) | 0.1.1 | ELKS | Battery gauges and interactive controls |
 | [ELX Commander](docs/tools/elxcommander.md) | 0.1 | ELKS | Two-panel text file manager (`elxcmd`) |
 | [ELXcap](docs/tools/elxcap.md) | 0.1 | ELKS | Lossless BMP/PBM screen captures |
 
 ## Get the binaries
 
-The **Releases** section contains `ELX-Suite-0.1.0-binaries.zip` with the current
+The **Releases** section contains `ELX-Suite-0.1.1-binaries.zip` with the current
 six ELKS binaries, plus individual tool/dashboard packages with source and build
 evidence. `SHA256SUMS` checks release assets; `BINARY-MANIFEST.json` identifies
 each executable. The suite version does not replace the individual tool versions.
@@ -50,7 +50,7 @@ integration; ordinary and delayed captures do not.
 
 ![ELXdash software demo](docs/assets/previews/elxdash-demo.png)
 
-*ELXdash 0.1: actual renderer in demo mode, synthetic readings.*
+*ELXdash 0.1.1: actual renderer in demo mode, synthetic readings.*
 
 Use ![Tab](docs/assets/keys/tab.svg) to select, then
 ![Left](docs/assets/keys/left.svg) / ![Right](docs/assets/keys/right.svg) or
@@ -72,12 +72,24 @@ charge percentages. [ELXdash guide](docs/tools/elxdash.md)
 
 ![ELXbat warning markers](docs/assets/previews/elxbat-offline.png)
 
-*ELXbat 0.1.2: actual renderer using an offline fixture. Not a hardware capture.*
+*ELXbat 0.1.3: actual renderer using an offline fixture. Not a hardware capture.*
 
 Outlined triangles show nominal low thresholds; the solid triangle shows main
 critical. Actual firmware warning flags remain separate because of hysteresis.
 ![R](docs/assets/keys/r.svg) rereads; ![Q](docs/assets/keys/q.svg) /
 ![Esc](docs/assets/keys/esc.svg) exits. [Usage and thresholds](docs/tools/elxbat.md)
+
+Both graphical tools check the firmware power-status byte once per second.
+The plug and cable indicate external power; a bolt appears only for **active
+charging**. Battery power has a battery symbol; a failed read shows `?` and an
+unknown/stale message. Only the status strip redraws when this reading changes.
+Gauges retain their normal refresh interval. Firmware update latency still needs
+plug/unplug testing on the HP; polling does not force a fresh measurement.
+
+![Power indicator states](docs/assets/previews/power-states.png)
+
+*Actual renderer with synthetic states: battery, external, charging enabled but
+inactive, active charging, fast charging, unplugged, and read failure.*
 
 ## ELXstat — how to use
 
@@ -153,6 +165,28 @@ requires the included kernel integration and is **not available on an unchanged
 - `tools/elx-ctl`: command planning and hardware controls.
 - `tools/elx-dash`: ELXdash interface and ELKS/host platform backends.
 - `tools/elx-commander`, `tools/elx-cap`: file manager and capture utility.
+
+## Credits and inspiration
+
+The HP palmtop community's DOS utilities inspired these independent ELKS tools:
+
+| ELX tool | Inspiration |
+| --- | --- |
+| ELXstat | LXSTAT's hardware and firmware status reports |
+| ELXbat | BATG's main and backup battery-voltage display |
+| ELXctl / ELXdash | CXCTL (Control 1000CX) hardware controls; BATG battery monitoring |
+| ELXcap | GEMCAP's hotkey-to-file screen-capture workflow |
+| ELX Commander | Norton Commander and classic two-panel file managers |
+
+Alexander Rau's HP 200LX book and supplied screenshots/output provided reference
+material. The half-circle gauges follow his requested design direction.
+The HP 100LX/200LX Developer's Guide documents the firmware interfaces; the
+ELKS project supplies the operating system and toolchain. ELKSWeb contributed
+reused graphics/console techniques, build helpers and the font used here.
+
+The DOS tools are behavioural and visual references; their original code and
+executables are not bundled. Reused code and font notices remain with the source
+and in the licences below. See each tool's source README for detailed attribution.
 
 ## License
 

@@ -15,6 +15,7 @@ static void help(void) {
          "       elxbat --help | --version\n"
          "Graphics: light theme, standalone CGA; no Nano-X. Q/Esc quits; R rereads.\n"
          "Text: one snapshot; --watch repeats. Default interval: 5 seconds.\n"
+         "Graphics power status: polls firmware cache every second; bolt = active charging.\n"
          "--image reads an OFFLINE 1 MiB physical-memory image.\n"
          "Readings are cached volts, NOT charge percentages. Battery settings unchanged.");
 #if !defined(__ia16__) || defined(ELX_CGA_TEST)
@@ -35,7 +36,8 @@ int main(int argc,char **argv) {
 #if !defined(__ia16__) || defined(ELX_CGA_TEST)
     const char *preview=0;
 #else
-    time_t last,cur;char now[24];
+    time_t last,last_power,cur;char now[24];int power_stale=0;
+    struct elx_status next;
 #endif
     for(i=1;i<argc;i++) {
         if(!strcmp(argv[i],"--help") || !strcmp(argv[i],"-h")) {help();return 0;}
@@ -81,7 +83,7 @@ int main(int argc,char **argv) {
         }
     }
     if(elx_console_open()<0) {perror("ELXbat: acquire CGA console");elx_close(&reader);return 1;}
-    last=time(0);stamp(now);elx_draw(&elx_cga_canvas,&s,now);
+    last=last_power=time(0);stamp(now);elx_draw(&elx_cga_canvas,&s,now);
     while(running) {
         int key=elx_console_key(),refresh=0;
         if(key<0) {result=1;break;}
@@ -90,8 +92,21 @@ int main(int argc,char **argv) {
         cur=time(0);
         if(cur<last || cur-last>=(time_t)interval)refresh=1;
         if(refresh) {
-            if(elx_read(&reader,&s)<0) {result=1;break;}
-            last=cur;stamp(now);elx_draw(&elx_cga_canvas,&s,now);
+            last=last_power=cur;
+            if(elx_read(&reader,&next)<0) {
+                power_stale=1;elx_draw_power(&elx_cga_canvas,&s,1);
+                elx_cga_canvas.rect(0,181,640,19,0);
+                elx_cga_canvas.text(8,183,"READ ERROR: battery values stale | Retrying | Q: quit R: reread",0);
+            } else {
+                s=next;power_stale=0;stamp(now);elx_draw(&elx_cga_canvas,&s,now);
+            }
+        } else if(cur<last_power || cur-last_power>=1) {
+            unsigned char flags=0;int stale,changed;
+            last_power=cur;stale=elx_read_power(&reader,&flags)<0;
+            changed=stale!=power_stale || (!stale && ((flags^s.bda[0xd4])&ELX_POWER_MASK));
+            if(!stale)s.bda[0xd4]=(s.bda[0xd4]&~ELX_POWER_MASK)|(flags&ELX_POWER_MASK);
+            power_stale=stale;
+            if(changed)elx_draw_power(&elx_cga_canvas,&s,power_stale);
         }
         elx_console_wait();
     }

@@ -5,6 +5,10 @@
 #include <string.h>
 static struct ctl_state current;
 static int calls,fail_read,ignore_write;
+static unsigned char power_flags;
+int dash_read_power(unsigned char *flags) {
+    if(fail_read)return -1;*flags=power_flags;return 0;
+}
 int dash_read(struct ctl_state *s,struct elx_status *b) {
     if(fail_read)return -1;*s=current;memset(b,0,sizeof(*b));
     b->bda[0x9a]=39;b->bda[0x9b]=57;strcpy(b->rom,"ROM BIOS Ver 2.14");return 0;
@@ -51,5 +55,17 @@ int main(void) {
     strcpy(d.battery.rom,"unknown");assert(elx_low_mv(&d.battery,1)==-1);
     d.battery.bda[0xd4]|=3;assert(!strcmp(elx_alert(&d.battery,1),"LOW"));
     d.battery.bda[0xd5]=0x40;assert(!strcmp(elx_alert(&d.battery,0),"VERY LOW"));
-    puts("PASS: bounds, live read-back, failures, queued/restored zoom, discrete choices, timeout, battery profiles");return 0;
+    reset(&d);d.battery.bda[0xd4]=0x83;power_flags=0x40;n=calls;
+    assert(dash_poll_power(&d)&&d.battery.bda[0xd4]==0xc3);
+    assert(!dash_poll_power(&d)); /* unchanged: no redraw */
+    power_flags=0;assert(dash_poll_power(&d)&&d.battery.bda[0xd4]==0x83);
+    power_flags=8;assert(dash_poll_power(&d)); /* enabled, inactive */
+    power_flags=0x18;assert(dash_poll_power(&d)); /* charging */
+    power_flags=0x38;assert(dash_poll_power(&d)); /* fast charging */
+    fail_read=1;assert(dash_poll_power(&d)&&d.power_failed);
+    assert(!dash_poll_power(&d));
+    d.failed=1;fail_read=0;assert(dash_poll_power(&d)&&!d.power_failed&&d.failed);
+    assert(calls==n); /* polling never writes settings or clears control failure */
+    power_flags=0x40;assert(dash_poll_power(&d)); /* unplugged */
+    puts("PASS: power transitions, stale/recovery, no writes; bounds, live read-back, failures, queued/restored zoom, discrete choices, timeout, battery profiles");return 0;
 }

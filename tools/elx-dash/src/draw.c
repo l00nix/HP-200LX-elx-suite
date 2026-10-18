@@ -21,6 +21,16 @@ static void battery(const struct dashboard *d,int backup) {
     else sprintf(s,"%s | low threshold unknown",elx_alert(&d->battery,backup));
     center(cx,98,s);
 }
+void dash_draw_power(const struct dashboard *d) {
+    char s[100];
+    c->rect(0,14,640,12,0);
+    elx_power_icon(c,8,14,d->battery.bda[0xd4],d->power_failed);
+    if(d->power_failed)c->text(56,14,"Power: unknown | Read failed; last status stale",0);
+    else {
+        sprintf(s,"%s | %s | Charge %s | cached volts, age unknown",(d->battery.bda[0xd4]&0x80)?"NiCad":"Alkaline",elx_source(&d->battery),elx_charging(&d->battery));
+        c->text(56,14,s,0);
+    }
+}
 void dash_draw(const struct dashboard *d) {
     char s[100];const char *ann,*zoom;unsigned seconds;
     static const char *zooms[]={"80x25","64x18","40x25","40x16"};
@@ -28,8 +38,7 @@ void dash_draw(const struct dashboard *d) {
     c->rect(0,0,640,200,0);c->rect(0,0,640,13,1);
     c->text(7,1,DASH_NAME " " DASH_VERSION,1);
     c->text(180,1,d->demo?"DEMO - NO HARDWARE CHANGES":"HP 200LX | nominal BIOS warning markers",1);
-    sprintf(s,"%s | %s | Charge %s | cached volts, age unknown",(d->battery.bda[0xd4]&0x80)?"NiCad":"Alkaline",elx_source(&d->battery),elx_charging(&d->battery));
-    c->text(8,14,s,0);
+    dash_draw_power(d);
     battery(d,0);battery(d,1);c->line(320,26,320,160);
     choice(109,113,108,"CONTRAST",d->selected==0);
     choice(433,113,100,"VOLUME",d->selected==1);

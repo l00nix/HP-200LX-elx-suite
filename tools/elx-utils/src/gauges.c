@@ -27,13 +27,21 @@ static void gauge(const struct elx_canvas *c,int cx,unsigned raw,const char *tit
     }
     if(elx_mv(raw)>=0 && elx_mv(raw)<2000) c->text(cx-elx_text_width("Below 2.0 V")/2,139,"Below 2.0 V",0);
 }
-void elx_draw(const struct elx_canvas *c,const struct elx_status *s,const char *stamp) {
+void elx_draw_power(const struct elx_canvas *c,const struct elx_status *s,int stale) {
     char line[100];
+    c->rect(0,21,640,19,0);
+    elx_power_icon(c,8,23,s->bda[0xd4],stale);
+    if(stale)c->text(56,25,"Power: unknown | Read failed; last status stale",0);
+    else {
+        sprintf(line,"%s | Power: %s | Charge: %s",elx_type(s),elx_source(s),elx_charging(s));
+        c->text(56,25,line,0);
+    }
+}
+void elx_draw(const struct elx_canvas *c,const struct elx_status *s,const char *stamp) {
     c->rect(0,0,640,200,0); c->rect(0,0,640,18,1);
     c->text(8,2,"ELXbat " ELX_BAT_VERSION " | Battery voltage",1);
     c->text(442,2,stamp,1);
-    sprintf(line,"%s | Power: %s | Charge: %s",elx_type(s),elx_source(s),elx_charging(s));
-    c->text(8,25,line,0);
+    elx_draw_power(c,s,0);
     gauge(c,160,s->bda[0x9a],"MAIN BATTERIES",s,0);
     gauge(c,480,s->bda[0x9b],"BACKUP BATTERY",s,1);
     c->line(320,50,320,173);

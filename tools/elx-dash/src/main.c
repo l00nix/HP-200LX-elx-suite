@@ -8,7 +8,7 @@ static volatile int running=1;
 static void stop(int sig) {(void)sig;running=0;}
 int main(int argc,char **argv) {
     struct dashboard d;int i,demo=0,rc=0,normal=0;
-    unsigned long last,now;const char *preview=0,*script="";
+    unsigned long last,last_power,now;const char *preview=0,*script="";
     for(i=1;i<argc;i++) {
         if(!strcmp(argv[i],"--demo"))demo=1;
         else if(!strcmp(argv[i],"--help")) {
@@ -18,6 +18,7 @@ int main(int argc,char **argv) {
                  "Contrast 0..31; volume 0..3; zoom on exit; icons left/right/off.\n"
                  "BIOS timeout: 30-second steps, Off..3604s. Not ELKS auto-sleep.\n"
                  "Battery triangles: nominal low / solid critical; firmware flags shown.\n"
+                 "Power polls every second; plug = external, bolt = active charging.\n"
                  "--demo uses synthetic values and never changes HP settings.");
             return 0;
         } else if(!strcmp(argv[i],"--version")) {puts(DASH_NAME " " DASH_VERSION);return 0;}
@@ -48,13 +49,17 @@ int main(int argc,char **argv) {
 #endif
 #endif
     if(dash_enter()<0){fprintf(stderr,"%s: cannot acquire graphics console\n",DASH_NAME);dash_close();return 1;}
-    last=dash_clock();dash_draw(&d);
+    last=last_power=dash_clock();dash_draw(&d);
     while(running) {
         int k=dash_key(),changed=0;
         if(k<0){rc=1;break;}
         if(k) {if(dash_key_event(&d,k)){normal=1;break;}changed=1;}
         now=dash_clock();
-        if(now<last || now-last>=5){dash_refresh(&d);last=now;changed=1;}
+        if(now<last || now-last>=5){dash_refresh(&d);last=last_power=now;changed=1;}
+        else if(now<last_power || now-last_power>=1) {
+            last_power=now;
+            if(dash_poll_power(&d) && !changed)dash_draw_power(&d);
+        }
         if(changed)dash_draw(&d);
         dash_wait();
     }

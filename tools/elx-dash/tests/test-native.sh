@@ -11,3 +11,5 @@ mkdir -p build-tests
 "$EMU" build-tests/test-model
 "$CC" $flags $inc -DDASH_TEST -DELX_CGA_TEST -maout-heap=4096 -maout-stack=4096 src/main.c src/platform_host.c src/model.c src/demo.c src/draw.c ../elx-ctl/src/commands.c ../elx-utils/src/battery.c ../elx-utils/src/widgets.c ../elx-utils/src/cga.c -o build-tests/elxdash-preview
 python3 tests/test_cli.py "$EMU" build-tests/elxdash-preview
+"$CC" $flags $inc -DELX_CGA_TEST -maout-heap=4096 -maout-stack=4096 tests/power_preview.c src/draw.c ../elx-utils/src/gauges.c ../elx-utils/src/widgets.c ../elx-utils/src/cga.c ../elx-utils/src/status.c ../elx-utils/src/battery.c -o build-tests/power-preview
+python3 tests/test_power.py "$EMU" build-tests/power-preview

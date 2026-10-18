@@ -14,3 +14,5 @@ mkdir -p build-tests
 "$CC" $flags $inc -DELX_CGA_TEST -maout-heap=2048 -maout-stack=2048 \
     src/elxbat.c src/gauges.c src/widgets.c src/cga.c src/status.c src/battery.c -o build-tests/elxbat-render
 python3 tests/test_target.py "$EMU"
+"$CC" $flags $inc -maout-heap=2048 -maout-stack=2048 src/elxbat.c tests/test_power_loop.c -o build-tests/power-loop
+"$EMU" build-tests/power-loop

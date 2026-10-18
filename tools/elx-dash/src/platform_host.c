@@ -6,6 +6,7 @@ int demo_read(struct ctl_state *,struct elx_status *);
 void demo_call(const struct ctl_plan *);
 int dash_open(int demo) {if(!demo)return -1;demo_init();return 0;}
 int dash_read(struct ctl_state *s,struct elx_status *b){return demo_read(s,b);}
+int dash_read_power(unsigned char *flags){*flags=0x40;return 0;}
 void dash_call(const struct ctl_plan *p){demo_call(p);}
 void dash_close(void){}
 int dash_enter(void){return -1;}

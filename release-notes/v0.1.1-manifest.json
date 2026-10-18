@@ -1,0 +1,43 @@
+{
+  "suite": "0.1.1",
+  "prerelease": true,
+  "visibility": "private",
+  "intended_repository": "l00nix/HP-200LX-elx-suite",
+  "versions": {
+    "ELXstat": "0.1",
+    "ELXbat": "0.1.3",
+    "ELXctl": "0.1",
+    "ELX Commander": "0.1",
+    "ELXcap": "0.1",
+    "ELXdash": "0.1.1"
+  },
+  "binaries": {
+    "ELKS/elxstat": {
+      "bytes": 10448,
+      "sha256": "a03e259661941b9dd0fe64d1012d1a9edf31675b5aea5c18ebd3e9e21d5541ea"
+    },
+    "ELKS/elxbat": {
+      "bytes": 20272,
+      "sha256": "b4393bed5aed2a1cf359d003bad4c9dae2660d21015b69bf155e131ee3d80c8a"
+    },
+    "ELKS/elxdash": {
+      "bytes": 18864,
+      "sha256": "eb8ab2bbd69d83099adc6f53067f51d310712e7417483d4b6bbff0f0df8072f1"
+    },
+    "ELKS/elxctl": {
+      "bytes": 8336,
+      "sha256": "ed71a0c5f5f34e128b01c8e4d342d3a7d705367252d9c22bde42bdcaeb6926a1"
+    },
+    "ELKS/elxcmd": {
+      "bytes": 18448,
+      "sha256": "4c6f6ed94ba735e6a97248b4c53f0b97b4b52cd51efd0c6476fb774cce680d08"
+    },
+    "ELKS/elxcap": {
+      "bytes": 9056,
+      "sha256": "33eccc5742da65066349dc9c4429149e3fefa95a6f7851ce298c8960765392fa"
+    }
+  },
+  "status": "Power-indicator prerelease; see GitHub Releases for published assets",
+  "hardware_testing": "Current builds pending; see docs/TESTING.md",
+  "repository": "https://github.com/l00nix/HP-200LX-elx-suite"
+}

@@ -22,6 +22,10 @@ int dash_read(struct ctl_state *s,struct elx_status *b) {
     return elx_read(&reader,b);
 }
 void dash_call(const struct ctl_plan *p){if(simulated)demo_call(p);else ctl_call(p);}
+int dash_read_power(unsigned char *flags) {
+    if(simulated) {*flags=0x40;return 0;}
+    return elx_read_power(&reader,flags);
+}
 void dash_close(void){if(reader.fd>=0)elx_close(&reader);if(!simulated)ctl_close();}
 int dash_enter(void){return elx_console_open();}
 int dash_leave(void){return elx_console_close();}

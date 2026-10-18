@@ -1,5 +1,31 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
 #include "cga.h"
+/* 40x12 monochrome status glyph, sized for the HP's tall CGA pixels.
+ * The cable/plug denotes external power; the bolt denotes active charging. */
+void elx_power_icon(const struct elx_canvas *c,int x,int y,unsigned flags,int stale) {
+    c->rect(x,y,40,12,0);
+    if(stale) {c->text(x+14,y+1,"?",0);return;}
+    if(flags&0x40) {
+        c->rect(x+6,y+2,22,9,1);c->rect(x+8,y+3,18,7,0);
+        c->rect(x+28,y+4,3,5,1);
+        /* No fill segments: this is a source symbol, not a charge estimate. */
+    } else {
+        c->line(x,y+2,x,y+6);c->line(x,y+6,x+4,y+8);
+        c->line(x+4,y+8,x+11,y+8);c->line(x+11,y+8,x+13,y+6);
+        c->rect(x+13,y+2,11,9,1);c->rect(x+15,y+3,7,7,0);
+        c->rect(x+24,y+3,5,2,1);c->rect(x+24,y+8,5,2,1);
+        if(flags&0x10) {
+            int bolt[12];
+            bolt[0]=x+36;bolt[1]=y;
+            bolt[2]=x+31;bolt[3]=y+6;
+            bolt[4]=x+35;bolt[5]=y+6;
+            bolt[6]=x+33;bolt[7]=y+11;
+            bolt[8]=x+39;bolt[9]=y+4;
+            bolt[10]=x+35;bolt[11]=y+4;
+            c->poly(bolt,6);
+        }
+    }
+}
 static const int arc[61][2] = {
     {-1000,0},
     {-999,-52},

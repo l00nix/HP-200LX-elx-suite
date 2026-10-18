@@ -12,3 +12,5 @@ test: all
 	$(CC) $(CFLAGS) $(INC) tests/test_model.c src/model.c ../elx-ctl/src/commands.c ../elx-utils/src/battery.c -o $(BUILD)/test-model
 	$(BUILD)/test-model
 	python3 tests/test_cli.py $(BUILD)/elxdash
+	$(CC) $(CFLAGS) $(INC) tests/power_preview.c src/draw.c ../elx-utils/src/gauges.c ../elx-utils/src/widgets.c ../elx-utils/src/cga.c ../elx-utils/src/status.c ../elx-utils/src/battery.c -o $(BUILD)/power-preview
+	python3 tests/test_power.py $(BUILD)/power-preview

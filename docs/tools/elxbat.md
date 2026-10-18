@@ -1,4 +1,4 @@
-# ELXbat 0.1.2
+# ELXbat 0.1.3
 
 Two large half-circle battery-voltage gauges, dark ink on a light background.
 
@@ -32,6 +32,21 @@ clear flags are shown independently. Values are volts, not charge percentages.
 
 The program never changes battery policy or thresholds. Global LCD inversion
 remains controlled by ![ON + /](../assets/keys/on-slash.svg); use the normal LCD polarity
-for the default light appearance. The 0.1.2 release awaits physical HP testing.
+for the default light appearance. The 0.1.3 release awaits physical HP testing.
 
 [Threshold evidence](../../tools/elx-utils/THRESHOLDS.md) · [Full notes](../../tools/elx-utils/README.md) · [Suite](../../README.md)
+
+## Automatic power indicator
+
+The graphical display checks the firmware power-status byte once per second,
+independently of the five-second default gauge refresh. The plug with a short
+cable means external power; a battery outline means battery power. A lightning
+bolt appears only when the firmware reports active charging, including fast
+charging. Enabled-but-inactive charging does not show a bolt. The battery
+outline is a power-source symbol, not a remaining-charge estimate.
+
+A read failure replaces the symbol with `?` and labels the power status unknown.
+The indicator recovers after a successful read. Power changes redraw only the
+status strip, with no full-screen flash. Reads do not change any power or charging
+settings. Firmware-cache update latency is unknown until hardware plug/unplug
+testing; a one-second poll does not guarantee one-second physical detection.

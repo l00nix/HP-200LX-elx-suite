@@ -76,6 +76,11 @@ static int battery_equal(const unsigned char *a,const unsigned char *b) {
     return !memcmp(a+0x9a,b+0x9a,2) &&
         !memcmp(a+0xd0,b+0xd0,2) && !memcmp(a+0xd4,b+0xd4,2);
 }
+int elx_read_power(struct elx_reader *r,unsigned char *flags) {
+    /* One atomic firmware-cache byte; this does not trigger a measurement.
+     * Keep power polling independent of BIOS calls and voltage snapshots. */
+    return read_at(r->fd,0x4d4UL,flags,1);
+}
 int elx_read(struct elx_reader *r,struct elx_status *s) {
     unsigned char b[256],t1[4],t2[4];
     unsigned tries;

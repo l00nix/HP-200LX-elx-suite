@@ -10,7 +10,7 @@ A C compiler, make and Python 3 are required. Host builds use explicit offline
 fixtures or simulation for HP hardware functions.
 
 ```sh
-make -C tools/elx-utils host
+make -C tools/elx-utils test
 make -C tools/elx-ctl test
 make -C tools/elx-dash test
 make -C tools/elx-cap test
@@ -43,6 +43,6 @@ it does not patch the shared toolchain. See its source README.
 ## Release preparation
 
 Built executables live in GitHub Releases, not the Git source tree. Local
-`release-assets/` is ignored. `release-notes/v0.1.0.md` and
-`release-notes/v0.1.0-manifest.json` describe the first prerelease. The prepared
+`release-assets/` is ignored. `release-notes/v0.1.1.md` and
+`release-notes/v0.1.1-manifest.json` describe the current prerelease. The prepared
 assets contain their own checksums and full packages with validation evidence.

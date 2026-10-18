@@ -1,4 +1,4 @@
-# ELXdash 0.1
+# ELXdash 0.1.1
 
 A light-theme, standalone 640×200 HP 200LX dashboard for firmware-aware ELKS.
 It needs neither Nano-X nor a mouse.
@@ -103,3 +103,18 @@ build-host/elxdash --demo --preview dash.pbm
 GPL-2.0-or-later for project code; see COPYING. The reused ELKSWeb font retains
 its separate FONT-LICENSE. No original CXCTL, BATG, DOS system files or HP ROM
 are distributed. ELXctl 0.1 remains a separate command-line tool.
+
+## Automatic power indicator
+
+The graphical display checks the firmware power-status byte once per second,
+independently of the five-second default gauge refresh. The plug with a short
+cable means external power; a battery outline means battery power. A lightning
+bolt appears only when the firmware reports active charging, including fast
+charging. Enabled-but-inactive charging does not show a bolt. The battery
+outline is a power-source symbol, not a remaining-charge estimate.
+
+A read failure replaces the symbol with `?` and labels the power status unknown.
+The indicator recovers after a successful read. Power changes redraw only the
+status strip, with no full-screen flash. Reads do not change any power or charging
+settings. Firmware-cache update latency is unknown until hardware plug/unplug
+testing; a one-second poll does not guarantee one-second physical detection.

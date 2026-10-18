@@ -15,3 +15,9 @@ $(BUILD)/elxbat: src/elxbat.c src/gauges.c src/widgets.c src/cga.c $(COMMON) src
 	$(HOSTCC) $(CFLAGS) src/elxbat.c src/gauges.c src/widgets.c src/cga.c $(COMMON) -o $@
 clean:
 	rm -f $(BUILD)/elxstat $(BUILD)/elxbat
+
+.PHONY: test
+test: host
+	python3 tests/test_cli.py $(BUILD)
+	$(HOSTCC) $(CFLAGS) -D__ia16__ src/elxbat.c tests/test_power_loop.c -o $(BUILD)/power-loop
+	$(BUILD)/power-loop

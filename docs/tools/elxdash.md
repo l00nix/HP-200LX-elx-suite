@@ -1,4 +1,4 @@
-# ELXdash 0.1
+# ELXdash 0.1.1
 
 Battery monitoring and interactive settings on one 640×200 screen.
 Native firmware-aware ELKS; no Nano-X or kernel patch required.
@@ -52,3 +52,18 @@ mark values stale and disable edits until a successful read.
 ELXdash requires readable `/dev/kmem` (normally root) and graphics-console ownership. Serial sessions are rejected. Exit restores text mode, terminal input and zoom, and clears the text screen.
 
 Physical HP testing is pending. [Full build and implementation notes](../../tools/elx-dash/README.md) · [Suite](../../README.md)
+
+## Automatic power indicator
+
+The graphical display checks the firmware power-status byte once per second,
+independently of the five-second default gauge refresh. The plug with a short
+cable means external power; a battery outline means battery power. A lightning
+bolt appears only when the firmware reports active charging, including fast
+charging. Enabled-but-inactive charging does not show a bolt. The battery
+outline is a power-source symbol, not a remaining-charge estimate.
+
+A read failure replaces the symbol with `?` and labels the power status unknown.
+The indicator recovers after a successful read. Power changes redraw only the
+status strip, with no full-screen flash. Reads do not change any power or charging
+settings. Firmware-cache update latency is unknown until hardware plug/unplug
+testing; a one-second poll does not guarantee one-second physical detection.

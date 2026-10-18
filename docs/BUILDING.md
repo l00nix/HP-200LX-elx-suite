@@ -1,0 +1,61 @@
+# Building the ELX suite
+
+Keep the sibling directories under `tools/` together: the dashboards reuse the
+control and graphics sources directly. Source builds do not install anything
+on a palmtop or change an existing ELKS tree.
+
+## Host builds
+
+A C compiler, make and Python 3 are required. Host builds use explicit offline
+fixtures or simulation for HP hardware functions.
+
+```sh
+make -C tools/elx-utils host
+make -C tools/elx-ctl test
+make -C tools/elx-dash test
+make -C tools/elx-cap test
+make -C tools/elx-commander host
+python3 scripts/check_docs.py
+```
+
+Each tool's source README describes its full test suite, including Commander
+file-operation tests. macOS sanitizer builds may need
+`-Wno-deprecated-declarations` for bounded uses of legacy `sprintf`; target
+libraries do not necessarily offer modern hosted-library replacements.
+
+## ELKS
+
+Use a configured ELKS tree with the ia16-elf compiler and matching headers/libs:
+
+```sh
+cd tools/elx-utils
+ELKS=/path/to/configured/elks sh build-elks.sh
+```
+
+Repeat in `elx-ctl`, `elx-cap`, `elx-commander` and `elx-dash`. Outputs go into
+each tool's `build-elks/` directory, with ELF/map/disassembly and static
+instruction/memory audit evidence. Targets explicitly select i8086.
+
+For emulator tests, use an elksemu with correct 32-bit ELKS timeval conversion
+on a 64-bit host. Commander includes an isolated-emulator preparation helper;
+it does not patch the shared toolchain. See its source README.
+
+## DOS LXdash
+
+Open Watcom 2 with DOS headers and 16-bit libraries is required. The existing
+build script uses the Linux x64 host binaries:
+
+```sh
+cd tools/elx-dash
+WATCOM=/path/to/open-watcom sh build-dos.sh
+```
+
+This creates `build-dos/LXDASH.EXE`, a real-mode 8086 small-model executable.
+No DOS extender is required. The release manifest identifies the compiler build.
+
+## Release preparation
+
+Built executables live in GitHub Releases, not the Git source tree. Local
+`release-assets/` is ignored. `release-notes/v0.1.0.md` and
+`release-notes/v0.1.0-manifest.json` describe the first prerelease. The prepared
+assets contain their own checksums and full packages with validation evidence.

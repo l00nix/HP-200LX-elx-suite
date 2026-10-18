@@ -1,0 +1,30 @@
+ELXstat 0.1 - OFFLINE IMAGE
+Main battery      2.558 V  NiCad (configured)
+Backup battery    2.860 V
+Firmware alerts   main=clear backup=LOW card=clear
+Power source      external
+Charging status   disabled
+Charging timer    00:00:00 (nominal 55 ms ticks)
+Battery interval  14.850 seconds
+Data source       OFFLINE IMAGE / firmware cache; sample age unknown
+Firmware timeout  180.015 seconds (not ELKS sleep policy)
+Firmware light sleep allowed in BIOS keyboard polling
+Power-on alarm    disabled (firmware flag)
+Power error flags very-low=no overvoltage=no
+Video mode        0x03 (firmware)
+Zoom mode         0x85
+BIOS text geometry 80 columns x 25 rows
+Display page      0
+Annunciators      enabled, right corner
+Contrast/frame rate: unavailable in 0.1 (no indexed-I/O writes).
+COM1 BIOS address 0x03f8
+Live serial protocol unavailable (run on an existing serial shell).
+UART power/modem lines: unavailable in 0.1; no port reads with side effects.
+HP model/revision 0x0201 (ROM identity signature)
+Version 1.02 A 
+ROM BIOS Ver 2.14
+ROM date          05/24/94
+Keyboard delay    594 ms (firmware)
+Keyboard repeat   132 ms (firmware)
+Raw battery codes main=36 backup=47 reference=32
+Raw battery flags 82 00; poll countdown=100

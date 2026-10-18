@@ -1,0 +1,7 @@
+**/build-*/
+**/__pycache__/
+*.pyc
+*.su
+.DS_Store
+release-assets/
+**/tests/fixtures/

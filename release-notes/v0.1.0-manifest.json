@@ -1,0 +1,47 @@
+{
+  "suite": "0.1.0",
+  "prerelease": true,
+  "visibility": "private",
+  "intended_repository": "l00nix/elx-suite",
+  "versions": {
+    "ELXstat": "0.1",
+    "ELXbat": "0.1.2",
+    "ELXctl": "0.1",
+    "ELX Commander": "0.1",
+    "ELXcap": "0.1",
+    "ELXdash": "0.1",
+    "LXdash": "0.1"
+  },
+  "binaries": {
+    "ELKS/elxstat": {
+      "bytes": 10448,
+      "sha256": "a03e259661941b9dd0fe64d1012d1a9edf31675b5aea5c18ebd3e9e21d5541ea"
+    },
+    "ELKS/elxbat": {
+      "bytes": 19232,
+      "sha256": "2cb86a28ea2aa035f82b33797814ac9308ac1caf6341021b6cce864f432b6f0a"
+    },
+    "ELKS/elxdash": {
+      "bytes": 17920,
+      "sha256": "7c79d37d032baf86c8c1a2786e91d21fbe96fa41903755be0042b7fe2b4dd51b"
+    },
+    "ELKS/elxctl": {
+      "bytes": 8336,
+      "sha256": "ed71a0c5f5f34e128b01c8e4d342d3a7d705367252d9c22bde42bdcaeb6926a1"
+    },
+    "ELKS/elxcmd": {
+      "bytes": 18448,
+      "sha256": "4c6f6ed94ba735e6a97248b4c53f0b97b4b52cd51efd0c6476fb774cce680d08"
+    },
+    "ELKS/elxcap": {
+      "bytes": 9056,
+      "sha256": "33eccc5742da65066349dc9c4429149e3fefa95a6f7851ce298c8960765392fa"
+    },
+    "DOS/LXDASH.EXE": {
+      "bytes": 29396,
+      "sha256": "037055b9a0b5d339dfa54e7cb12f62ca9652cb69b3deb72be1312a15b5c28558"
+    }
+  },
+  "status": "Prepared locally; repository and release not yet published",
+  "hardware_testing": "Current builds pending; see docs/TESTING.md"
+}

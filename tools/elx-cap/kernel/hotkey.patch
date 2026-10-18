@@ -1,0 +1,109 @@
+--- a/elks/arch/i86/drivers/char/mem.c
++++ b/elks/arch/i86/drivers/char/mem.c
+@@ -93,12 +93,21 @@
+     return len;
+ }
+ 
++#ifdef CONFIG_HP200LX_FW
++#include "elxcap-impl.h"
++#endif
++
+ static int kmem_ioctl(struct inode *inode, struct file *file, int cmd, char *arg)
+ {
+     unsigned short retword;
+     struct mem_usage mu;
+ 
+     switch (cmd) {
++#ifdef CONFIG_HP200LX_FW
++    case 0x4501: /* ELXcap acquire/renew and read event counter */
++    case 0x4502: /* ELXcap release */
++        return elxcap_ioctl(cmd,arg);
++#endif
+     case MEM_GETTASK:
+         retword = (unsigned)task;
+         break;
+--- a/elks/arch/i86/drivers/char/kbd-scancode.c
++++ b/elks/arch/i86/drivers/char/kbd-scancode.c
+@@ -42,6 +42,9 @@
+ #include <arch/system.h>
+ #include "console.h"
+ 
++#ifdef CONFIG_HP200LX_FW
++extern int elxcap_key(unsigned, unsigned, unsigned);
++#endif
+ static void keyboard_irq(int irq, struct pt_regs *regs);
+ static void set_leds(void);
+ static int kb_read(void);
+@@ -232,6 +235,10 @@
+ 	E0key = 1;
+ 	E0Prefix = 0;
+     }
++
++#ifdef CONFIG_HP200LX_FW
++    if (elxcap_key((unsigned)code, ModeState, (unsigned)E0key)) return;
++#endif
+ 
+     /* high bit set when key released */
+     keyReleased = code & 0x80;
+--- /dev/null
++++ b/elks/arch/i86/drivers/char/elxcap-state.h
+@@ -0,0 +1,32 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later
++ * Pure state machine shared with tests. Call under saved interrupt flags.
++ * A three-second renewable lease prevents a dead listener owning the key.
++ */
++struct elxcap_state {
++    int owner;
++    unsigned long renewed;
++    unsigned count;
++    unsigned char down;
++};
++static struct elxcap_state elxcap;
++static int elxcap_live(unsigned long now, unsigned hz) {
++    return elxcap.owner && now-elxcap.renewed < 3UL*hz;
++}
++static int elxcap_lease(int pid,unsigned long now,unsigned hz) {
++    if(elxcap_live(now,hz) && elxcap.owner!=pid) return -1;
++    if(!elxcap_live(now,hz)) elxcap.down=0;
++    elxcap.owner=pid; elxcap.renewed=now;
++    return 0;
++}
++static int elxcap_scan(unsigned code,unsigned modifiers,unsigned extended,
++                       unsigned long now,unsigned hz) {
++    if(extended || (code&0x7f)!=0x34) return 0;
++    if(code&0x80) {
++        int consumed=elxcap.down;
++        elxcap.down=0; return consumed;
++    }
++    if(!elxcap_live(now,hz)) { elxcap.down=0; return 0; }
++    if(elxcap.down) return 1; /* Suppress typematic repeats until release. */
++    if((modifiers&0x0f)!=0x08) return 0; /* Alt only, no Ctrl/Shift. */
++    elxcap.down=1; ++elxcap.count; return 1;
++}
+--- /dev/null
++++ b/elks/arch/i86/drivers/char/elxcap-impl.h
+@@ -0,0 +1,24 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later
++ * Included by mem.c under CONFIG_HP200LX_FW. No allocation, screen access,
++ * filesystem work or BIOS calls in the keyboard interrupt.
++ */
++#include "elxcap-state.h"
++int elxcap_key(unsigned code,unsigned modifiers,unsigned extended) {
++    return elxcap_scan(code,modifiers,extended,jiffies,HZ);
++}
++static int elxcap_ioctl(int cmd,char *arg) {
++    flag_t flags;
++    unsigned count;
++    int result=0;
++    save_flags(flags); clr_irq();
++    if(cmd==0x4501) {
++        if(elxcap_lease(current->pid,jiffies,HZ)<0) result=-EBUSY;
++    } else {
++        if(elxcap.owner==current->pid) { elxcap.owner=0; elxcap.down=0; }
++        else result=-EPERM;
++    }
++    count=elxcap.count;
++    restore_flags(flags);
++    if(!result) put_user(count,arg);
++    return result;
++}

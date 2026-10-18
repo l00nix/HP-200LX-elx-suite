@@ -1,0 +1,9 @@
+ELXctl 0.1 - SIMULATION (no hardware changes)
+Contrast          16 / 31
+Speaker volume    2 (medium)
+Text zoom         80x25 (firmware 0x03)
+Video mode        0x03; logical page 80 x 25
+Annunciators      right (firmware preference)
+                  Visibility depends on firmware sleep/display handling.
+Firmware timeout  180.015 seconds (3273 nominal 55 ms ticks)
+                  This does not configure ELKS auto-sleep.

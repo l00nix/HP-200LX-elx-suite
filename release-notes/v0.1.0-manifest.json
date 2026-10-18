@@ -42,6 +42,7 @@
       "sha256": "037055b9a0b5d339dfa54e7cb12f62ca9652cb69b3deb72be1312a15b5c28558"
     }
   },
-  "status": "Prepared locally; repository and release not yet published",
-  "hardware_testing": "Current builds pending; see docs/TESTING.md"
+  "status": "Initial prerelease; see GitHub Releases for published assets",
+  "hardware_testing": "Current builds pending; see docs/TESTING.md",
+  "repository": "https://github.com/l00nix/elx-suite"
 }

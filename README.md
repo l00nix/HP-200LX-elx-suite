@@ -1,3 +1,5 @@
+> ⚠️ I’m developing this project with AI assistance out of personal interest. It may not fully align with the ELKS maintainer team’s architectural or development guidelines. Please use it at your own discretion. ⚠️
+
 # ELX tool suite for the HP 200LX
 
 Small native utilities for the HP 200LX running

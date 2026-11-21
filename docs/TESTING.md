@@ -1,5 +1,11 @@
 # What has been checked
 
+Cmdr and scrcap are now maintained separately. Use their own build scripts, tests
+and release artifacts: [Cmdr](https://github.com/l00nix/cmdr) and
+[scrcap](https://github.com/l00nix/scrcap). The old `elx-commander` and `elx-cap`
+paths below are retained only to reproduce historical suite packages. No new
+standalone binary is claimed to have passed the old hardware tests.
+
 The current releases have host tests, native ELKS cross-builds, emulator checks
 and static i8086/memory audits. Dashboard tests cover read-back failures,
 bounds, pending/restored zoom and actual framebuffer output.

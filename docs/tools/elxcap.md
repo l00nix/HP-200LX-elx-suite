@@ -1,3 +1,7 @@
+> **Legacy suite snapshot.** Maintained development has moved to
+> [scrcap](https://github.com/l00nix/scrcap). The standalone executable is `scrcap`.
+> Commands and versions below document the original suite release.
+
 # ELXcap 0.1
 
 Pixel-preserving monochrome screenshots for ELKS: BMP by default, PBM optional.

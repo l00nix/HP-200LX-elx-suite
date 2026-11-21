@@ -1,3 +1,7 @@
+> **Legacy suite snapshot.** Maintained development has moved to
+> [scrcap](https://github.com/l00nix/scrcap). The standalone executable is `scrcap`.
+> Commands and versions below document the original suite release.
+
 # ELXcap 0.1
 
 Native 8086/ELKS screenshot utility for the HP 200LX. Inspired by GEMCAP's

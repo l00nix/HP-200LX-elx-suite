@@ -1,5 +1,11 @@
 # Building the ELX suite
 
+Cmdr and scrcap are now maintained separately. Use their own build scripts, tests
+and release artifacts: [Cmdr](https://github.com/l00nix/cmdr) and
+[scrcap](https://github.com/l00nix/scrcap). The old `elx-commander` and `elx-cap`
+paths below are retained only to reproduce historical suite packages. No new
+standalone binary is claimed to have passed the old hardware tests.
+
 Keep the sibling directories under `tools/` together: the dashboard reuses the
 control and graphics sources directly. Source builds do not install anything
 on a palmtop or change an existing ELKS tree.

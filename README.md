@@ -7,10 +7,20 @@ Small native utilities for the HP 200LX running
 monitoring, hardware controls, screenshots and a classic two-panel file manager
 without Nano-X.
 
-**Initial prerelease:** current builds have automated/emulator checks but still
+**Historical suite prerelease:** these bundled builds have automated/emulator checks but still
 need physical HP validation. The original ELXstat/ELXbat 0.1 were observed running
 on the palmtop; that does not validate the newer builds. Every image below is
 labelled with its software-preview origin.
+
+**Standalone tools:** [Cmdr](https://github.com/l00nix/cmdr) (`cmdr`) and
+[scrcap](https://github.com/l00nix/scrcap) (`scrcap`) now have their own repositories,
+8.3-compatible installed names, ELKS external-build entry points and EPT recipes.
+The four HP firmware tools remain here. Existing suite releases and the source
+snapshots below retain their original names; new development of the file manager
+and capture utility happens in the standalone repositories. Upstream build and
+EPT server inclusion remain subject to maintainer acceptance:
+[ELKS PR #2858](https://github.com/ghaerr/elks/pull/2858) and
+[EPT PR #12](https://github.com/sammothxc/ept/pull/12).
 
 [Download releases](https://github.com/l00nix/HP-200LX-elx-suite/releases) ·
 [Tool guides](docs/tools) · [Build from source](docs/BUILDING.md) ·
@@ -24,12 +34,12 @@ labelled with its software-preview origin.
 | [ELXbat](docs/tools/elxbat.md) | 0.1.3 | ELKS | Large battery-voltage gauges and warning markers |
 | [ELXctl](docs/tools/elxctl.md) | 0.1 | ELKS | Command-line hardware controls |
 | [ELXdash](docs/tools/elxdash.md) | 0.1.1 | ELKS | Battery gauges and interactive controls |
-| [ELX Commander](docs/tools/elxcommander.md) | 0.1 | ELKS | Two-panel text file manager (`elxcmd`) |
-| [ELXcap](docs/tools/elxcap.md) | 0.1 | ELKS | Lossless BMP/PBM screen captures |
+| [Cmdr](https://github.com/l00nix/cmdr) | 0.2.0 | ELKS / ANSI terminal | Standalone two-panel file manager (`cmdr`); formerly ELX Commander |
+| [scrcap](https://github.com/l00nix/scrcap) | 0.2.0 | ELKS / CGA or HP display | Standalone lossless BMP/PBM capture (`scrcap`); formerly ELXcap |
 
 ## Get the binaries
 
-The **Releases** section contains `ELX-Suite-0.1.1-binaries.zip` with the current
+The **Releases** section contains `ELX-Suite-0.1.1-binaries.zip` with the historical
 six ELKS binaries, plus individual tool/dashboard packages with source and build
 evidence. `SHA256SUMS` checks release assets; `BINARY-MANIFEST.json` identifies
 each executable. The suite version does not replace the individual tool versions.
@@ -125,10 +135,10 @@ Controls contrast, volume, text zoom, annunciator preference and firmware
 timeout. Omit a value to query; each applied change is read back.
 [All options](docs/tools/elxctl.md)
 
-## ELX Commander — how to use
+## Cmdr — how to use
 
 ```sh
-./elxcmd /root /tmp
+cmdr /root /tmp
 ```
 
 ![ELX Commander emulator preview](docs/assets/previews/elxcommander-emulator.png)
@@ -139,25 +149,30 @@ timeout. Omit a value to query; each applied change is read back.
 ![F3](docs/assets/keys/f3.svg) views; ![F5](docs/assets/keys/f5.svg) copies;
 ![F6](docs/assets/keys/f6.svg) moves; ![F10](docs/assets/keys/f10.svg) quits.
 File operations require confirmation and refuse existing destinations.
-[Complete key reference and limits](docs/tools/elxcommander.md)
+[Current key reference and limits](https://github.com/l00nix/cmdr#use) ·
+[Legacy suite guide](docs/tools/elxcommander.md)
 
-## ELXcap — how to use
+## scrcap — how to use
 
 From an existing serial shell, capture the screen currently on the HP:
 
 ```sh
-./elxcap /root/SCREEN.BMP
-./elxcap -f pbm /root/SCREEN.PBM
+scrcap /root/SCREEN.BMP
+scrcap -f pbm /root/SCREEN.PBM
 ```
 
 ![ELXcap offline example](docs/assets/previews/elxcap-offline.png)
 
 *ELXcap BMP from an offline ELXbat framebuffer, losslessly converted to PNG for viewing.*
 
+The examples above use the standalone scrcap executable. Generic IBM-compatible
+CGA mode 6 is supported; HP also supports 80x25 text. Other display modes are not
+yet implemented. [Current usage](https://github.com/l00nix/scrcap#use).
+
 Delayed capture works without kernel changes. The optional
 ![Alt + .](docs/assets/keys/alt-period.svg) hotkey
-requires the included kernel integration and is **not available on an unchanged
-3.8 beta1 kernel**. [Capture instructions](docs/tools/elxcap.md)
+requires a separately integrated, compatible HP kernel patch; it is not part of
+the ordinary standalone installation. [Capture instructions](docs/tools/elxcap.md)
 
 ## Documentation and source
 
@@ -166,7 +181,9 @@ requires the included kernel integration and is **not available on an unchanged
 - `tools/elx-utils`: ELXstat, ELXbat and shared battery/graphics code.
 - `tools/elx-ctl`: command planning and hardware controls.
 - `tools/elx-dash`: ELXdash interface and ELKS/host platform backends.
-- `tools/elx-commander`, `tools/elx-cap`: file manager and capture utility.
+- `tools/elx-commander`, `tools/elx-cap`: frozen legacy source snapshots. Maintained
+  versions are [Cmdr](https://github.com/l00nix/cmdr) and
+  [scrcap](https://github.com/l00nix/scrcap).
 
 ## Credits and inspiration
 

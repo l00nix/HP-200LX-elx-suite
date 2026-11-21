@@ -1,3 +1,7 @@
+> **Legacy suite snapshot.** Maintained development has moved to
+> [cmdr](https://github.com/l00nix/cmdr). The standalone executable is `cmdr`.
+> Commands and versions below document the original suite release.
+
 # ELX Commander 0.1
 
 A small two-panel file manager for the HP 200LX ELKS toolbox. Run `elxcmd` in

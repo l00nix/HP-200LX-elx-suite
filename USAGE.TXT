@@ -1,0 +1,35 @@
+ELX tools package 0.2.0 - HP 200LX only, running firmware-aware ELKS
+
+Included: elxstat 0.1, elxbat 0.1.3, elxctl 0.1, elxdash 0.1.1.
+This is a packaging/split release; individual tool versions are unchanged.
+Cmdr and scrcap are separate projects/packages and are NOT bundled here.
+
+Commands:
+  elxstat             read firmware/system status
+  elxstat battery     battery and external-power status
+  elxbat              main/backup voltage gauges on the local HP console
+  elxbat --text       text battery report
+  elxctl status       read hardware settings
+  elxctl --dry-run contrast 16   preview a change without applying it
+  elxdash             interactive gauges and hardware controls
+  elxdash --demo      synthetic demonstration, local console only
+Use each program's --help for details.
+
+Dashboard: Tab selects; Left/Right or -/+ adjusts; R rereads; Q/Esc exits.
+Controls: contrast, volume, text zoom, annunciators and firmware timeout.
+Firmware timeout is not the ELKS sleep policy. This package does not change
+battery chemistry or enable charging. Battery volts are cached BIOS values,
+not remaining-charge percentages. Firmware warning flags are separate from
+the nominal threshold triangles. LCD/keyboard tests on exact builds remain
+separate from host/emulator tests; consult the repository's testing record.
+
+Requires genuine supported HP firmware, readable /dev/kmem (normally root),
+and an HP firmware-aware ELKS kernel. Graphics tools require the local text
+console. Do not run hardware controls on a generic PC or the Amstrad PPC.
+EPT installation only copies files: no kernel, startup or battery changes.
+
+EPT: add REPO=http://ept.8088retro.com to /etc/ept.cfg without deleting your
+existing repositories, then: ept update; ept install elxtools
+Remove this package with: ept remove elxtools
+
+License: GPL-2.0-or-later; see copying. Font license: font.lic.

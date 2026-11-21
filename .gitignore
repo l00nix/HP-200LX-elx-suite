@@ -5,3 +5,5 @@
 .DS_Store
 release-assets/
 **/tests/fixtures/
+
+build/

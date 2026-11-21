@@ -10,8 +10,7 @@ preserve unrelated state and report failed read-back. Do not add charging,
 serial-power or power-off writes as incidental UI changes.
 
 For a bug report include tool version, OS/kernel, ROM revision, exact command
-or keys, expected/actual result, and a screenshot where useful. Use scratch files
-for file-manager testing. Do not commit private ROMs, memory dumps, credentials,
+or keys, expected/actual result, and a screenshot where useful. Do not commit private ROMs, memory dumps, credentials,
 CF images or unrelated project files.
 
 Keyboard icons in `docs/assets/keys/` are local SVGs with accessible text labels.

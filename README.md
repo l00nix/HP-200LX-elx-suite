@@ -4,23 +4,17 @@
 
 Small native utilities for the HP 200LX running
 [ELKS Linux on HP 200LX](https://github.com/l00nix/elks-on-hp200lx). Battery
-monitoring, hardware controls, screenshots and a classic two-panel file manager
-without Nano-X.
+monitoring, firmware/system status and interactive hardware controls without Nano-X.
 
-**Historical suite prerelease:** these bundled builds have automated/emulator checks but still
-need physical HP validation. The original ELXstat/ELXbat 0.1 were observed running
-on the palmtop; that does not validate the newer builds. Every image below is
-labelled with its software-preview origin.
+**Package 0.2.0 contains four HP-specific tools:** ELXstat, ELXbat, ELXctl and
+ELXdash. This release changes packaging and installation; individual tool versions
+and behaviour are unchanged. Host/emulator checks are documented separately from
+physical HP acceptance.
 
-**Standalone tools:** [Cmdr](https://github.com/l00nix/cmdr) (`cmdr`) and
-[scrcap](https://github.com/l00nix/ELKS-scrcap) (`scrcap`) now have their own repositories,
-8.3-compatible installed names, ELKS external-build entry points and EPT recipes.
-The four HP firmware tools remain here. Existing suite releases and the source
-snapshots below retain their original names; new development of the file manager
-and capture utility happens in the standalone repositories. Upstream build and
-EPT server inclusion remain subject to maintainer acceptance:
-[ELKS PR #2858](https://github.com/ghaerr/elks/pull/2858) and
-[EPT PR #12](https://github.com/sammothxc/ept/pull/12).
+[ELKS-Cmdr](https://github.com/l00nix/ELKS-cmdr) (`cmdr`) and
+[ELKS-scrcap](https://github.com/l00nix/ELKS-scrcap) (`scrcap`) are separate projects.
+Their source and executables are no longer bundled in this suite. Historical
+six-tool releases remain in the release history.
 
 [Download releases](https://github.com/l00nix/HP-200LX-elx-suite/releases) ·
 [Tool guides](docs/tools) · [Build from source](docs/BUILDING.md) ·
@@ -34,24 +28,48 @@ EPT server inclusion remain subject to maintainer acceptance:
 | [ELXbat](docs/tools/elxbat.md) | 0.1.3 | ELKS | Large battery-voltage gauges and warning markers |
 | [ELXctl](docs/tools/elxctl.md) | 0.1 | ELKS | Command-line hardware controls |
 | [ELXdash](docs/tools/elxdash.md) | 0.1.1 | ELKS | Battery gauges and interactive controls |
-| [Cmdr](https://github.com/l00nix/cmdr) | 0.2.0 | ELKS / ANSI terminal | Standalone two-panel file manager (`cmdr`); formerly ELX Commander |
-| [ELKS-scrcap](https://github.com/l00nix/ELKS-scrcap) | 0.5.0 | ELKS / PC text, CGA, EGA/VGA, HP | Standalone monochrome BMP/PBM capture up to 640×480 (`scrcap`); formerly ELXcap |
 
-## Get the binaries
+## Install with EPT
 
-The **Releases** section contains `ELX-Suite-0.1.1-binaries.zip` with the historical
-six ELKS binaries, plus individual tool/dashboard packages with source and build
-evidence. `SHA256SUMS` checks release assets; `BINARY-MANIFEST.json` identifies
-each executable. The suite version does not replace the individual tool versions.
+On an HP 200LX with ELKS networking and EPT working, edit `/etc/ept.cfg` and
+add the following line **without removing your existing repository lines**:
 
-For ELKS, copy the required files from `ELKS/` using your normal binary-safe
-transfer method, then `chmod 755` them. Start graphics tools from the local HP
-text console. Firmware tools need readable `/dev/kmem`, normally as root, and
-a firmware-aware HP 200LX ELKS kernel. Commander also works over serial.
+```text
+REPO=http://ept.8088retro.com
+```
 
-No installer modifies a kernel, CF
-image or startup configuration. ELXcap's optional hotkey needs a separate kernel
-integration; ordinary and delayed captures do not.
+Then install only this package:
+
+```sh
+ept update
+ept install elxtools
+elxstat --version
+elxbat --version
+elxctl --version
+elxdash --version
+```
+
+The `elxtools` package installs `/bin/elxstat`, `/bin/elxbat`, `/bin/elxctl`,
+`/bin/elxdash` and license/usage files under `/lib/elxtools`. All installed names
+fit DOS/FAT 8.3. It does not install Cmdr, scrcap, DOS LXdash, a kernel, startup
+scripts or charging settings. `ept remove elxtools` removes the package's files.
+If you already copied these executables manually, preserve those copies before
+installing: EPT owns and replaces the same `/bin` paths.
+
+These tools need supported HP firmware, readable `/dev/kmem` (normally root),
+and an HP firmware-aware ELKS kernel. Start graphics tools from the local HP
+text console. This package is **not for generic ELKS PCs or the Amstrad PPC**.
+The upstream recipe submission and 8088retro package publication are tracked in
+[EPT integration](integration/README.md).
+
+## Manual download
+
+[Releases](https://github.com/l00nix/HP-200LX-elx-suite/releases) provide the
+four-tool `elxtools-0.2.0-elks.zip`, checksums and build/audit evidence.
+Copy `bin/` and `lib/` into the matching ELKS directories using a binary-safe
+transfer method, preserving executable permissions. Historical 0.1.x ZIPs contain
+six tools and are not the current package. The package version does not replace
+individual tool versions.
 
 ## ELXdash — how to use
 
@@ -135,47 +153,6 @@ Controls contrast, volume, text zoom, annunciator preference and firmware
 timeout. Omit a value to query; each applied change is read back.
 [All options](docs/tools/elxctl.md)
 
-## Cmdr — how to use
-
-```sh
-cmdr /root /tmp
-```
-
-![ELX Commander emulator preview](docs/assets/previews/elxcommander-emulator.png)
-
-*Native ELKS binary under elksemu, with sample directories; rendered terminal output.*
-
-![Tab](docs/assets/keys/tab.svg) switches panels;
-![F3](docs/assets/keys/f3.svg) views; ![F5](docs/assets/keys/f5.svg) copies;
-![F6](docs/assets/keys/f6.svg) moves; ![F10](docs/assets/keys/f10.svg) quits.
-File operations require confirmation and refuse existing destinations.
-[Current key reference and limits](https://github.com/l00nix/cmdr#use) ·
-[Legacy suite guide](docs/tools/elxcommander.md)
-
-## scrcap — how to use
-
-From an existing serial shell, capture the screen currently on the HP:
-
-```sh
-scrcap /root/SCREEN.BMP
-scrcap -f pbm /root/SCREEN.PBM
-```
-
-![ELXcap offline example](docs/assets/previews/elxcap-offline.png)
-
-*ELXcap BMP from an offline ELXbat framebuffer, losslessly converted to PNG for viewing.*
-
-The examples above use the standalone scrcap executable. Version 0.5 adds generic
-PC text and EGA/VGA graphics, with variable monochrome output up to 640×480.
-HP 80×25 text and CGA capture remain supported. PPC text capture has been tested;
-physical EGA/VGA validation remains pending, and original EGA requires a known
-register profile. [Usage and display limits](https://github.com/l00nix/ELKS-scrcap#use).
-
-Delayed capture works without kernel changes. The optional
-![Alt + .](docs/assets/keys/alt-period.svg) hotkey
-requires a separately integrated, compatible HP kernel patch; it is not part of
-the ordinary standalone installation. [Capture instructions](docs/tools/elxcap.md)
-
 ## Documentation and source
 
 - [Build instructions](docs/BUILDING.md), [test status](docs/TESTING.md), [contributing](CONTRIBUTING.md).
@@ -183,10 +160,6 @@ the ordinary standalone installation. [Capture instructions](docs/tools/elxcap.m
 - `tools/elx-utils`: ELXstat, ELXbat and shared battery/graphics code.
 - `tools/elx-ctl`: command planning and hardware controls.
 - `tools/elx-dash`: ELXdash interface and ELKS/host platform backends.
-- `tools/elx-commander`, `tools/elx-cap`: frozen legacy source snapshots. Maintained
-  versions are [Cmdr](https://github.com/l00nix/cmdr) and
-  [scrcap](https://github.com/l00nix/ELKS-scrcap).
-
 ## Credits and inspiration
 
 The HP palmtop community's DOS utilities inspired these independent ELKS tools:
@@ -196,10 +169,8 @@ The HP palmtop community's DOS utilities inspired these independent ELKS tools:
 | ELXstat | LXSTAT's hardware and firmware status reports |
 | ELXbat | BATG's main and backup battery-voltage display |
 | ELXctl / ELXdash | CXCTL (Control 1000CX) hardware controls; BATG battery monitoring |
-| ELXcap | GEMCAP's hotkey-to-file screen-capture workflow |
-| ELX Commander | Norton Commander and classic two-panel file managers |
 
-Alexander Rau's HP 200LX book and supplied screenshots/output provided reference
+[@l00nix](https://github.com/l00nix)'s HP 200LX book and supplied screenshots/output provided reference
 material. The half-circle gauges follow his requested design direction.
 The HP 100LX/200LX Developer's Guide documents the firmware interfaces; the
 ELKS project supplies the operating system and toolchain. ELKSWeb contributed

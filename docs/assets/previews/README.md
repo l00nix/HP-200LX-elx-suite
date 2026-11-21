@@ -8,8 +8,6 @@ keeping versions and capture conditions explicit.
 | --- | --- |
 | ELXdash | 0.1.1 shared renderer in demo mode; synthetic values |
 | ELXbat | 0.1.3 renderer, offline synthetic firmware snapshot |
-| ELX Commander | 0.1 native ELKS binary under elksemu; rendered terminal output |
-| ELXcap | 0.1 BMP from an offline ELXbat framebuffer, lossless PNG viewing conversion |
 | ELXstat | Actual 0.1 offline-fixture text output, typeset as a terminal image |
 | ELXctl | Actual 0.1 simulation output, typeset as a terminal image |
 

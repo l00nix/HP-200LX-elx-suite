@@ -31,9 +31,9 @@ six-tool releases remain in the release history.
 
 ## Install with EPT
 
-**Publication in progress:** the public source and EPT package are ready. The
-installation instructions below take effect when the 8088retro catalogue update
-is verified. The package has passed an isolated EPT installation test.
+Package **0.2.0 is available from [8088retro EPT](http://ept.8088retro.com)**.
+The [upstream recipe PR](https://github.com/sammothxc/ept/pull/13) has been
+submitted and awaits review; installation from 8088retro is available now.
 
 On an HP 200LX with ELKS networking and EPT working, edit `/etc/ept.cfg` and
 add the following line **without removing your existing repository lines**:

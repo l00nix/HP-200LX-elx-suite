@@ -3,6 +3,10 @@
 Repository: **l00nix/HP-200LX-elx-suite**, private. Keep current experimental builds
 marked as prereleases until physical HP validation supports a stable release.
 
+Package 0.2.0 contains only the four HP firmware tools. Public EPT publication
+requires publicly accessible source; do not infer permission to expose the entire
+private Git history from a request to stage a package.
+
 1. Update tool guides, preview captions, testing status and release notes.
 2. Run the relevant tests and `python3 scripts/check_docs.py`.
 3. Commit source and documentation; create the version tag at that commit.

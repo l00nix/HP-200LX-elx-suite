@@ -5,7 +5,9 @@ only the four HP utilities via the root `build.sh`, then installs seven explicit
 paths. It preserves the existing tool versions, includes both project and font
 licenses, and does not modify the kernel, startup configuration or firmware.
 
-The 8088retro EPT catalogue serves the verified release payload. The upstream EPT
+The verified release payload is staged for the 8088retro EPT catalogue; it is not
+yet public. The current source repository is private, so public-source publication
+must be settled before submitting a usable upstream recipe. The upstream EPT
 recipe submission is separate; acceptance does not happen automatically when a
 GitHub release is published. Publication links are recorded here after verification.
 

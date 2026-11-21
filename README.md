@@ -31,6 +31,10 @@ six-tool releases remain in the release history.
 
 ## Install with EPT
 
+**Prepared, not yet published:** the package and instructions below have passed
+an isolated EPT installation test. Publication to 8088retro and the upstream PR
+await the public-source repository decision; this repository is currently private.
+
 On an HP 200LX with ELKS networking and EPT working, edit `/etc/ept.cfg` and
 add the following line **without removing your existing repository lines**:
 

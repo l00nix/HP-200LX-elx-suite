@@ -1,11 +1,11 @@
 # Publishing releases
 
-Repository: **l00nix/HP-200LX-elx-suite**, private. Keep current experimental builds
+Repository: **l00nix/HP-200LX-elx-suite**, public. Keep current experimental builds
 marked as prereleases until physical HP validation supports a stable release.
 
-Package 0.2.0 contains only the four HP firmware tools. Public EPT publication
-requires publicly accessible source; do not infer permission to expose the entire
-private Git history from a request to stage a package.
+Package 0.2.0 contains only the four HP firmware tools. Public EPT builds use
+this repository. Historical commits and releases remain available; the split
+of Cmdr and scrcap applies to the current source and 0.2.0 package.
 
 1. Update tool guides, preview captions, testing status and release notes.
 2. Run the relevant tests and `python3 scripts/check_docs.py`.
@@ -14,9 +14,8 @@ private Git history from a request to stage a package.
    Include a binary manifest, source commit ID, licenses and SHA256SUMS.
 5. Push the commit and tag, then create the GitHub prerelease using its release
    notes. Upload the prepared assets; keep binaries out of source commits.
-6. Verify repository visibility is private, remote source matches the tagged
+6. Verify repository visibility is public, remote source matches the tagged
    commit, and downloaded release assets match the local checksums.
 
-Do not enable public Pages or change visibility as part of a release. Keep
-physical testing separate from mocked and emulator checks. Each preview should
+Keep physical testing separate from mocked and emulator checks. Each preview should
 identify its origin and tool version.

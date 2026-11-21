@@ -35,7 +35,7 @@ EPT server inclusion remain subject to maintainer acceptance:
 | [ELXctl](docs/tools/elxctl.md) | 0.1 | ELKS | Command-line hardware controls |
 | [ELXdash](docs/tools/elxdash.md) | 0.1.1 | ELKS | Battery gauges and interactive controls |
 | [Cmdr](https://github.com/l00nix/cmdr) | 0.2.0 | ELKS / ANSI terminal | Standalone two-panel file manager (`cmdr`); formerly ELX Commander |
-| [scrcap](https://github.com/l00nix/ELKS-scrcap) | 0.2.0 | ELKS / CGA or HP display | Standalone lossless BMP/PBM capture (`scrcap`); formerly ELXcap |
+| [ELKS-scrcap](https://github.com/l00nix/ELKS-scrcap) | 0.5.0 | ELKS / PC text, CGA, EGA/VGA, HP | Standalone monochrome BMP/PBM capture up to 640×480 (`scrcap`); formerly ELXcap |
 
 ## Get the binaries
 
@@ -165,9 +165,11 @@ scrcap -f pbm /root/SCREEN.PBM
 
 *ELXcap BMP from an offline ELXbat framebuffer, losslessly converted to PNG for viewing.*
 
-The examples above use the standalone scrcap executable. Generic IBM-compatible
-CGA mode 6 is supported; HP also supports 80x25 text. Other display modes are not
-yet implemented. [Current usage](https://github.com/l00nix/ELKS-scrcap#use).
+The examples above use the standalone scrcap executable. Version 0.5 adds generic
+PC text and EGA/VGA graphics, with variable monochrome output up to 640×480.
+HP 80×25 text and CGA capture remain supported. PPC text capture has been tested;
+physical EGA/VGA validation remains pending, and original EGA requires a known
+register profile. [Usage and display limits](https://github.com/l00nix/ELKS-scrcap#use).
 
 Delayed capture works without kernel changes. The optional
 ![Alt + .](docs/assets/keys/alt-period.svg) hotkey

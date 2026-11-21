@@ -13,7 +13,7 @@ on the palmtop; that does not validate the newer builds. Every image below is
 labelled with its software-preview origin.
 
 **Standalone tools:** [Cmdr](https://github.com/l00nix/cmdr) (`cmdr`) and
-[scrcap](https://github.com/l00nix/scrcap) (`scrcap`) now have their own repositories,
+[scrcap](https://github.com/l00nix/ELKS-scrcap) (`scrcap`) now have their own repositories,
 8.3-compatible installed names, ELKS external-build entry points and EPT recipes.
 The four HP firmware tools remain here. Existing suite releases and the source
 snapshots below retain their original names; new development of the file manager
@@ -35,7 +35,7 @@ EPT server inclusion remain subject to maintainer acceptance:
 | [ELXctl](docs/tools/elxctl.md) | 0.1 | ELKS | Command-line hardware controls |
 | [ELXdash](docs/tools/elxdash.md) | 0.1.1 | ELKS | Battery gauges and interactive controls |
 | [Cmdr](https://github.com/l00nix/cmdr) | 0.2.0 | ELKS / ANSI terminal | Standalone two-panel file manager (`cmdr`); formerly ELX Commander |
-| [scrcap](https://github.com/l00nix/scrcap) | 0.2.0 | ELKS / CGA or HP display | Standalone lossless BMP/PBM capture (`scrcap`); formerly ELXcap |
+| [scrcap](https://github.com/l00nix/ELKS-scrcap) | 0.2.0 | ELKS / CGA or HP display | Standalone lossless BMP/PBM capture (`scrcap`); formerly ELXcap |
 
 ## Get the binaries
 
@@ -167,7 +167,7 @@ scrcap -f pbm /root/SCREEN.PBM
 
 The examples above use the standalone scrcap executable. Generic IBM-compatible
 CGA mode 6 is supported; HP also supports 80x25 text. Other display modes are not
-yet implemented. [Current usage](https://github.com/l00nix/scrcap#use).
+yet implemented. [Current usage](https://github.com/l00nix/ELKS-scrcap#use).
 
 Delayed capture works without kernel changes. The optional
 ![Alt + .](docs/assets/keys/alt-period.svg) hotkey
@@ -183,7 +183,7 @@ the ordinary standalone installation. [Capture instructions](docs/tools/elxcap.m
 - `tools/elx-dash`: ELXdash interface and ELKS/host platform backends.
 - `tools/elx-commander`, `tools/elx-cap`: frozen legacy source snapshots. Maintained
   versions are [Cmdr](https://github.com/l00nix/cmdr) and
-  [scrcap](https://github.com/l00nix/scrcap).
+  [scrcap](https://github.com/l00nix/ELKS-scrcap).
 
 ## Credits and inspiration
 

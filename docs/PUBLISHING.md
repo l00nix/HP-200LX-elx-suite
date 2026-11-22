@@ -5,7 +5,7 @@ marked as prereleases until physical HP validation supports a stable release.
 
 Package 0.2.1 contains only the four HP firmware tools. Public EPT builds use
 this repository. Historical commits and releases remain available; the split
-of Cmdr and scrcap applies to the current source and 0.2.0 package.
+of Cmdr and scrcap applies to the current source and packages from 0.2.0 onward.
 
 1. Update tool guides, preview captions, testing status and release notes.
 2. Run the relevant tests and `python3 scripts/check_docs.py`.

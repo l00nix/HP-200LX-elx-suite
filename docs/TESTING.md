@@ -49,6 +49,13 @@ reads and a repeat-install check. That package used the older dashboard and
 battery display; its installation result must not be mistaken for 0.2.1 GUI
 acceptance. The test HP runs `ELKS 0.9.2 hp200lx-4.0-local`.
 
+The connected HP then upgraded from 0.2.0 to **0.2.1** using `ept update`
+and `ept install elxtools` directly against 8088retro. All seven installed
+files matched the published SHA-256 hashes; ELXbat reported 0.1.4 and ELXdash
+0.2.0-test4. ELXbat's text report read the firmware successfully, and a repeated
+install correctly reported up to date. The existing elxcap/elxcmd files were
+unchanged. No graphical program or charging test was launched in this session.
+
 Current hardware acceptance should cover local graphics, unchanged polling,
 R, power-icon transitions, Battery-menu arrows, locked Start, Q/Esc text
 restoration and keyboard/zoom restoration. ELXctl setting changes require

@@ -1,7 +1,7 @@
-ELX tools package 0.2.0 - HP 200LX only, running firmware-aware ELKS
+ELX tools package 0.2.1 - HP 200LX only, running firmware-aware ELKS
 
-Included: elxstat 0.1, elxbat 0.1.3, elxctl 0.1, elxdash 0.1.1.
-This is a packaging/split release; individual tool versions are unchanged.
+Included: elxstat 0.1, elxbat 0.1.4, elxctl 0.1, elxdash 0.2.0-test4.
+Includes the newer gauge redraws and Battery menu from the HP 4.0 bundle.
 Cmdr and scrcap are separate projects/packages and are NOT bundled here.
 
 Commands:
@@ -17,8 +17,14 @@ Use each program's --help for details.
 
 Dashboard: Tab selects; Left/Right or -/+ adjusts; R rereads; Q/Esc exits.
 Controls: contrast, volume, text zoom, annunciators and firmware timeout.
-Firmware timeout is not the ELKS sleep policy. This package does not change
-battery chemistry or enable charging. Battery volts are cached BIOS values,
+Firmware timeout is not the ELKS sleep policy. Installing or opening the
+dashboard does not change battery chemistry or enable charging. Press B for
+the Battery menu; Up/Down/Tab select, Left/Right edit limits, Enter chooses,
+Esc closes. Start is locked unless --charge-test is explicitly supplied.
+Experimental NiCd tests also require confirmation; no full-charge profile or
+physical charging validation is claimed. The supervisor survives dashboard
+exit; reopen B and select Stop test to stop it. Never use with other cell types.
+See the online guide before opting in. Battery volts are cached BIOS values,
 not remaining-charge percentages. Firmware warning flags are separate from
 the nominal threshold triangles. LCD/keyboard tests on exact builds remain
 separate from host/emulator tests; consult the repository's testing record.

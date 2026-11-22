@@ -1,3 +1,8 @@
+#include "dash.h"
+int dash_charge_test;
+int dash_read(struct ctl_state *s,struct elx_status *b){(void)s;(void)b;return -1;}
+int dash_read_power(unsigned char *f){(void)f;return -1;}
+void dash_call(const struct ctl_plan *p){(void)p;}
 /* SPDX-License-Identifier: GPL-2.0-or-later */
 /* Exercise shared icon and both real screen renderers, including partial redraw. */
 #include "dash.h"

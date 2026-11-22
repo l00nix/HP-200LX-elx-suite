@@ -23,6 +23,8 @@ its ELF/map/disassembly. Builds target i8086 and audit instruction coverage and
 near-memory use. Installation copies only the seven explicit paths documented
 in the EPT recipe. It does not install into or modify the ELKS toolchain tree.
 
-Package version 0.2.0 is a packaging/split release. Tool source versions are
-ELXstat 0.1, ELXbat 0.1.3, ELXctl 0.1 and ELXdash 0.1.1. Later experimental HP
-charging work is not imported by this packaging change.
+Package 0.2.1 updates the four-tool suite to ELXstat 0.1, ELXbat 0.1.4,
+ELXctl 0.1 and ELXdash 0.2.0-test4. ELKS sources come from the published HP
+200LX 4.0 application bundle. DOS backends and DOS executables are not built.
+The Battery menu's native charging supervisor remains experimental and requires
+explicit runtime opt-in; installation never starts it.

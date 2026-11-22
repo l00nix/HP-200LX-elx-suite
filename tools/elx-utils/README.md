@@ -1,4 +1,4 @@
-# ELXstat 0.1 and ELXbat 0.1.3
+# ELXstat 0.1 and ELXbat 0.1.4
 
 Native HP 200LX utilities for the ELKS toolbox. These are experimental,
 read-only battery/status utilities. User photos confirm that both 0.1 utilities
@@ -214,3 +214,11 @@ The indicator recovers after a successful read. Power changes redraw only the
 status strip, with no full-screen flash. Reads do not change any power or charging
 settings. Firmware-cache update latency is unknown until hardware plug/unplug
 testing; a one-second poll does not guarantee one-second physical detection.
+
+## ELXbat 0.1.4
+
+Imported from the published HP 200LX 4.0 application sources. Unchanged polling
+cycles no longer clear and redraw the complete screen. Changed gauges and
+status regions update independently; R still requests a reread. The production
+polling-loop and incremental-frame tests cover this behavior. See the suite
+[testing record](../../docs/TESTING.md) for current build/hardware scope.

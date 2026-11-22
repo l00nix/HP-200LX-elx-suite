@@ -3,8 +3,17 @@
 #define ELX_DASH_H
 #include "ctl.h"
 #include "elx.h"
-#define DASH_VERSION "0.1.1"
+#include "charge.h"
+#include "abc.h"
+#if defined(__WATCOMC__) && !defined(DASH_DOS_MENU)
+#define DASH_DOS_MENU
+#endif
+#define DASH_VERSION "0.2.0-test4"
+#ifdef __WATCOMC__
+#define DASH_NAME "LXdash"
+#else
 #define DASH_NAME "ELXdash"
+#endif
 #define DK_LEFT 256
 #define DK_RIGHT 257
 #define DK_UP 258
@@ -14,6 +23,12 @@ struct dashboard {
     struct elx_status battery;
     unsigned selected,zoom;
     int zoom_pending,failed,demo,power_failed;
+    int menu,menu_item,confirm;
+    struct charge_limits limits;
+    struct abc_settings abc;
+    unsigned abc_edit[ABC_FIELDS];
+    int abc_loaded,abc_action;
+    char charge_status[80];
     char message[80];
 };
 int dash_open(int demo);
@@ -33,5 +48,11 @@ int dash_adjust(struct dashboard *d,int direction);
 int dash_finish(struct dashboard *d,int apply_pending);
 int dash_key_event(struct dashboard *d,int key);
 void dash_draw(const struct dashboard *d);
+int dash_draw_update(const struct dashboard *d);
+void dash_draw_menu(const struct dashboard *d);
+int dash_dos_menu_key(struct dashboard *d,int key);
+void dash_dos_draw_menu(const struct dashboard *d);
+void dash_dos_menu_open(struct dashboard *d);
+int dash_menu_key(struct dashboard *d,int k);
 void dash_draw_power(const struct dashboard *d);
 #endif

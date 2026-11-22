@@ -18,6 +18,8 @@ int dash_init(struct dashboard *d,int demo) {
         ctl_error="Start from an HP 80x25 logical text console";return -1;
     }
     d->zoom=(unsigned)z;
+    d->limits.mv=2900;d->limits.minutes=5;d->limits.stall=5;
+    dash_charge_status(d->charge_status,sizeof(d->charge_status));
     strcpy(d->message,"Read-back controls | triangles: low / solid critical");return 0;
 }
 int dash_refresh(struct dashboard *d) {
@@ -26,6 +28,7 @@ int dash_refresh(struct dashboard *d) {
         d->failed=d->power_failed=1;strcpy(d->message,"READ ERROR: values stale; editing disabled; Q to exit");return -1;
     }
     d->state=s;d->battery=b;
+    dash_charge_status(d->charge_status,sizeof(d->charge_status));
     if(d->failed)strcpy(d->message,"Read recovered; current firmware cache shown");
     d->failed=d->power_failed=0;return 0;
 }
@@ -94,6 +97,14 @@ int dash_finish(struct dashboard *d,int apply_pending) {
     return 0;
 }
 int dash_key_event(struct dashboard *d,int k) {
+    if(d->menu)return dash_menu_key(d,k);
+    if(k=='b'||k=='B'){
+        d->menu=1;d->menu_item=0;
+#ifdef DASH_DOS_MENU
+        dash_dos_menu_open(d);
+#endif
+        return 0;
+    }
     if(k=='q'||k=='Q'||k==27||k==3)return 1;
     if(k=='\t'||k==DK_DOWN)d->selected=(d->selected+1)%5;
     else if(k==DK_UP)d->selected=(d->selected+4)%5;

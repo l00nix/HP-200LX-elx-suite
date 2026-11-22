@@ -1,4 +1,4 @@
-# ELXdash 0.1.1
+# ELXdash 0.2.0-test4
 
 Battery monitoring and interactive settings on one 640×200 screen.
 Native firmware-aware ELKS; no Nano-X or kernel patch required.
@@ -51,7 +51,8 @@ mark values stale and disable edits until a successful read.
 
 ELXdash requires readable `/dev/kmem` (normally root) and graphics-console ownership. Serial sessions are rejected. Exit restores text mode, terminal input and zoom, and clears the text screen.
 
-Physical HP testing is pending. [Full build and implementation notes](../../tools/elx-dash/README.md) · [Suite](../../README.md)
+Earlier HP tests confirmed menu navigation, steady display and the default Start lock.
+The current rebuild has its own [testing record](../TESTING.md). [Full build and implementation notes](../../tools/elx-dash/README.md) · [Suite](../../README.md)
 
 ## Automatic power indicator
 
@@ -67,3 +68,29 @@ The indicator recovers after a successful read. Power changes redraw only the
 status strip, with no full-screen flash. Reads do not change any power or charging
 settings. Firmware-cache update latency is unknown until hardware plug/unplug
 testing; a one-second poll does not guarantee one-second physical detection.
+
+## Experimental Battery menu
+
+Press B to open or close the menu. Up/Down/Tab select one of five rows; Left/Right
+or -/+ edit limits. Enter chooses Start or Stop; Esc closes the menu. Unchanged
+polling does not repaint the menu. The three limits are stop voltage, maximum
+time and voltage-stall time. Limits are test bounds, not a full-charge profile.
+
+Normal startup leaves Start locked. Installing or opening the dashboard never
+enables charging. An attended NiCd experiment requires `elxdash --charge-test`,
+then Enter on Start and an explicit Y confirmation that two NiCd AA cells are
+installed. N/Esc cancels. Never enable this with alkaline, NiMH or lithium cells.
+The BIOS cannot identify the actual battery chemistry.
+
+The experimental supervisor checks fresh readings, external power, firmware
+faults and time/voltage/stall limits. It has no automatic restart or trickle
+stage. It continues after Q exits the dashboard; reopen B and choose Stop test
+to request shutdown. Status is stored under `/var/run/elxchg`, with the final
+reason in `/var/run/elxchg-last`. Stale sessions block another start. Do not
+remove the lock to bypass an uncertain session. If status becomes stale or
+shutdown fails, disconnect external power. Userspace supervision cannot guarantee
+shutdown after a forced kill, kernel hang or suspension.
+
+No physical charging acceptance is claimed for this ELKS supervisor. DOS
+LXdash/ABC tests do not validate the ELKS charging implementation. Ordinary menu
+and display testing should run without `--charge-test`.

@@ -1,4 +1,4 @@
-# ELXbat 0.1.3
+# ELXbat 0.1.4
 
 Two large half-circle battery-voltage gauges, dark ink on a light background.
 
@@ -32,7 +32,8 @@ clear flags are shown independently. Values are volts, not charge percentages.
 
 The program never changes battery policy or thresholds. Global LCD inversion
 remains controlled by ![ON + /](../assets/keys/on-slash.svg); use the normal LCD polarity
-for the default light appearance. The 0.1.3 release awaits physical HP testing.
+for the default light appearance. Version 0.1.4 redraws only changed gauges and status regions. Earlier HP testing
+confirmed steady display and manual/power updates; see the [current build record](../TESTING.md).
 
 [Threshold evidence](../../tools/elx-utils/THRESHOLDS.md) · [Full notes](../../tools/elx-utils/README.md) · [Suite](../../README.md)
 

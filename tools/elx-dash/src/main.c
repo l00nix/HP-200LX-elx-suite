@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
+int dash_charge_test=0;
 static volatile int running=1;
 static void stop(int sig) {(void)sig;running=0;}
 int main(int argc,char **argv) {
@@ -11,15 +12,22 @@ int main(int argc,char **argv) {
     unsigned long last,last_power,now;const char *preview=0,*script="";
     for(i=1;i<argc;i++) {
         if(!strcmp(argv[i],"--demo"))demo=1;
+        else if(!strcmp(argv[i],"--charge-test"))dash_charge_test=1;
         else if(!strcmp(argv[i],"--help")) {
             puts(DASH_NAME " " DASH_VERSION " - HP 200LX battery and control dashboard\n"
                  "Usage: " DASH_NAME " [--demo]\n"
+                 "B opens Battery menu. --charge-test unlocks experimental ELKS test cycles.\n"
                  "Tab/Up/Down select; Left/Right or +/- adjust; R rereads; Q/Esc quits.\n"
                  "Contrast 0..31; volume 0..3; zoom on exit; icons left/right/off.\n"
                  "BIOS timeout: 30-second steps, Off..3604s. Not ELKS auto-sleep.\n"
                  "Battery triangles: nominal low / solid critical; firmware flags shown.\n"
                  "Power polls every second; plug = external, bolt = active charging.\n"
                  "--demo uses synthetic values and never changes HP settings.");
+#ifdef __WATCOMC__
+            puts("Open Watcom runtime source is available under the Sybase Open Watcom\n"
+                 "Public License: https://github.com/open-watcom/open-watcom-v2\n"
+                 "See WATCOM-LICENSE.txt in the distribution.");
+#endif
             return 0;
         } else if(!strcmp(argv[i],"--version")) {puts(DASH_NAME " " DASH_VERSION);return 0;}
 #if (!defined(__ia16__) && !defined(__WATCOMC__)) || defined(DASH_TEST)
@@ -51,16 +59,22 @@ int main(int argc,char **argv) {
     if(dash_enter()<0){fprintf(stderr,"%s: cannot acquire graphics console\n",DASH_NAME);dash_close();return 1;}
     last=last_power=dash_clock();dash_draw(&d);
     while(running) {
-        int k=dash_key(),changed=0;
+        int k=dash_key(),changed=0,restore=0;
         if(k<0){rc=1;break;}
-        if(k) {if(dash_key_event(&d,k)){normal=1;break;}changed=1;}
+        if(k) {
+            /* ABC/LX temporarily leaves graphics mode; rebuild its background
+             * on return even if all visible dashboard values are unchanged. */
+            restore=d.confirm==2 && (k=='y'||k=='Y');
+            if(dash_key_event(&d,k)){normal=1;break;}changed=1;
+        }
         now=dash_clock();
         if(now<last || now-last>=5){dash_refresh(&d);last=last_power=now;changed=1;}
         else if(now<last_power || now-last_power>=1) {
             last_power=now;
-            if(dash_poll_power(&d) && !changed)dash_draw_power(&d);
+            if(dash_poll_power(&d))changed=1;
         }
-        if(changed)dash_draw(&d);
+        if(restore)dash_draw(&d);
+        else if(changed)dash_draw_update(&d);
         dash_wait();
     }
     if(dash_leave()<0){rc=1;fputs("Text console restore failed\n",stderr);}

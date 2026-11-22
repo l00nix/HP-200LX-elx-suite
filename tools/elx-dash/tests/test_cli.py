@@ -8,7 +8,7 @@ with tempfile.TemporaryDirectory() as tmp:
   r=subprocess.run([*exe,*a],capture_output=True,text=True,timeout=10)
   assert r.returncode==code,(a,r.returncode,r.stdout,r.stderr)
   return r.stdout
- assert '0.1' in run('--version')
+ assert '0.2.0-test4' in run('--version')
  assert 'Contrast' in run('--help')
  run('--bad',code=2);run(code=2)
  out=run('--demo','--preview',str(p))
@@ -19,4 +19,10 @@ with tempfile.TemporaryDirectory() as tmp:
  assert p.read_bytes()!=base
  out=run('--demo','--preview',str(p),'--script','q++++')
  assert 'contrast=16' in out
+ out=run('--demo','--preview',str(p),'--script','b')
+ menu=p.read_bytes();assert menu!=base
+ run('--demo','--preview',str(p),'--script','b\t\t\t\r')
+ confirmation=p.read_bytes();assert confirmation!=menu
+ run('--demo','--preview',str(p),'--script','b\t\t\t\r\x1b')
+ assert p.read_bytes()!=confirmation
  print('PASS: CLI validation, actual framebuffer, scripted selection/adjustment, exit handling')

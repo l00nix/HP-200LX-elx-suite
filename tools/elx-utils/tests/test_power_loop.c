@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-static int tick,reads,polls,full,partial,stale,footer;
+static int tick,reads,polls,full,updates,partial,stale,footer;
 static int power_ticks[16];
 time_t time(time_t *out){if(out)*out=tick;return tick;}
 char *ttyname(int fd){(void)fd;return "/dev/tty1";}
@@ -31,12 +31,18 @@ const struct elx_canvas elx_cga_canvas={rect,0,0,text};
 void elx_draw(const struct elx_canvas *c,const struct elx_status *s,const char *stamp){
     (void)c;(void)stamp;assert(s->bda[0x9a]==39);full++;
 }
+void elx_draw_update(const struct elx_canvas *c,const struct elx_status *old,const struct elx_status *s,const char *stamp,int recovered){
+    (void)c;(void)old;(void)stamp;assert(s->bda[0x9a]==39);assert(recovered==(tick==10));updates++;
+}
+void elx_draw_error(const struct elx_canvas *c,const struct elx_status *s){
+    (void)c;assert(s->bda[0x9a]==39);partial++;stale++;footer++;
+}
 void elx_draw_power(const struct elx_canvas *c,const struct elx_status *s,int failed){
     (void)c;assert(s->bda[0x9a]==39);partial++;if(failed)stale++;
 }
 int elx_console_close(void){
     static const int expected[]={1,2,3,4,6,7,8,9,11};
-    int i;assert(reads==4&&full==3&&polls==9&&footer==1);
+    int i;assert(reads==4&&full==1&&updates==2&&polls==9&&footer==1);
     for(i=0;i<polls;i++)assert(power_ticks[i]==expected[i]);
     assert(partial==5&&stale==1);
     puts("PASS: production ELXbat loop: one-second power checks, five-second gauges, change-only redraw, stale/recovery, R, Q");return 0;

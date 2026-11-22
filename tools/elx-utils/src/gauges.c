@@ -4,6 +4,7 @@
  */
 #include "cga.h"
 #include <stdio.h>
+#include <string.h>
 static void gauge(const struct elx_canvas *c,int cx,unsigned raw,const char *title,const struct elx_status *s,int backup) {
     int mv=elx_mv(raw);
     c->text(cx-elx_text_width(title)/2,48,title,0);
@@ -47,4 +48,28 @@ void elx_draw(const struct elx_canvas *c,const struct elx_status *s,const char *
     c->line(320,50,320,173);
     c->text(8,183,s->offline?"OFFLINE | Nominal BIOS markers | Q/Esc: quit":
         "Cached volts, age unknown | Nominal BIOS markers | Q: quit R: reread",0);
+}
+
+static void footer(const struct elx_canvas *c,const struct elx_status *s) {
+    c->rect(0,181,640,19,0);
+    c->text(8,183,s->offline?"OFFLINE | Nominal BIOS markers | Q/Esc: quit":
+        "Cached volts, age unknown | Nominal BIOS markers | Q: quit R: reread",0);
+}
+void elx_draw_error(const struct elx_canvas *c,const struct elx_status *s) {
+    elx_draw_power(c,s,1);c->rect(0,181,640,19,0);
+    c->text(8,183,"READ ERROR: battery values stale | Retrying | Q: quit R: reread",0);
+}
+void elx_draw_update(const struct elx_canvas *c,const struct elx_status *old,const struct elx_status *s,const char *stamp,int recovered) {
+    int b;
+    /* Header time has its own rectangle; never clear the complete screen. */
+    c->rect(442,0,198,18,1);c->text(442,2,stamp,1);
+    if(recovered || ((old->bda[0xd4]^s->bda[0xd4])&0xf8))elx_draw_power(c,s,0);
+    for(b=0;b<2;b++) {
+        if(old->bda[0x9a+b]!=s->bda[0x9a+b] ||
+           strcmp(elx_alert(old,b),elx_alert(s,b)) || elx_low_mv(old,b)!=elx_low_mv(s,b)) {
+            c->rect(b?321:0,42,b?319:320,137,0);
+            gauge(c,b?480:160,s->bda[0x9a+b],b?"BACKUP BATTERY":"MAIN BATTERIES",s,b);
+        }
+    }
+    if(recovered || old->offline!=s->offline)footer(c,s);
 }

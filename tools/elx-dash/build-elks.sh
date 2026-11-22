@@ -13,7 +13,7 @@ CC=$CROSS/bin/ia16-elf-gcc
 flags="-Os -melks-libc -march=i8086 -mtune=i8086 -mcmodel=small -mno-segment-relocation-stuff -fno-builtin-printf -fno-builtin-fprintf -Wall -Wextra -Werror -ffunction-sections -fdata-sections -fstack-usage"
 inc="-Isrc -I../elx-utils/src -I../elx-ctl/src -I$ELKS/include -I$ELKS/libc/include -I$ELKS/elks/include"
 objects=""
-for source in src/main.c src/model.c src/demo.c src/draw.c src/platform_elks.c ../elx-ctl/src/commands.c ../elx-ctl/src/hardware.c ../elx-utils/src/status.c ../elx-utils/src/battery.c ../elx-utils/src/widgets.c ../elx-utils/src/cga.c ../elx-utils/src/console.c; do
+for source in src/main.c src/model.c src/menu.c src/charge.c src/charge_elks.c src/demo.c src/draw.c src/platform_elks.c ../elx-ctl/src/commands.c ../elx-ctl/src/hardware.c ../elx-utils/src/status.c ../elx-utils/src/battery.c ../elx-utils/src/widgets.c ../elx-utils/src/cga.c ../elx-utils/src/console.c; do
  name=$(basename "$source" .c)
  "$CC" $flags $inc -c "$source" -o "$BUILD/obj/$name.o"
  objects="$objects $BUILD/obj/$name.o"

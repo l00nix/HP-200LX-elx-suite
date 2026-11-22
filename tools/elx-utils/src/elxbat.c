@@ -36,7 +36,7 @@ int main(int argc,char **argv) {
 #if !defined(__ia16__) || defined(ELX_CGA_TEST)
     const char *preview=0;
 #else
-    time_t last,last_power,cur;char now[24];int power_stale=0;
+    time_t last,last_power,cur;char now[24];int power_stale=0,read_stale=0;
     struct elx_status next;
 #endif
     for(i=1;i<argc;i++) {
@@ -94,11 +94,11 @@ int main(int argc,char **argv) {
         if(refresh) {
             last=last_power=cur;
             if(elx_read(&reader,&next)<0) {
-                power_stale=1;elx_draw_power(&elx_cga_canvas,&s,1);
-                elx_cga_canvas.rect(0,181,640,19,0);
-                elx_cga_canvas.text(8,183,"READ ERROR: battery values stale | Retrying | Q: quit R: reread",0);
+                if(!read_stale)elx_draw_error(&elx_cga_canvas,&s);
+                read_stale=power_stale=1;
             } else {
-                s=next;power_stale=0;stamp(now);elx_draw(&elx_cga_canvas,&s,now);
+                stamp(now);elx_draw_update(&elx_cga_canvas,&s,&next,now,read_stale||power_stale);
+                s=next;power_stale=read_stale=0;
             }
         } else if(cur<last_power || cur-last_power>=1) {
             unsigned char flags=0;int stale,changed;

@@ -6,10 +6,11 @@ Small native utilities for the HP 200LX running
 [ELKS Linux on HP 200LX](https://github.com/l00nix/elks-on-hp200lx). Battery
 monitoring, firmware/system status and interactive hardware controls without Nano-X.
 
-**Package 0.2.0 contains four HP-specific tools:** ELXstat, ELXbat, ELXctl and
-ELXdash. This release changes packaging and installation; individual tool versions
-and behaviour are unchanged. Host/emulator checks are documented separately from
-physical HP acceptance.
+**Package 0.2.1 contains four HP-specific tools:** ELXstat, ELXbat, ELXctl and
+ELXdash. This update brings ELXbat 0.1.4 and ELXdash 0.2.0-test4 from the HP
+200LX 4.0 source bundle into the standalone suite. It restores incremental gauge
+redraws and the Battery menu. Experimental charging starts remain locked unless
+`--charge-test` is explicitly supplied. See [testing status](docs/TESTING.md).
 
 [ELKS-Cmdr](https://github.com/l00nix/ELKS-cmdr) (`cmdr`) and
 [ELKS-scrcap](https://github.com/l00nix/ELKS-scrcap) (`scrcap`) are separate projects.
@@ -25,13 +26,13 @@ six-tool releases remain in the release history.
 | Tool | Version | System | Purpose |
 | --- | --- | --- | --- |
 | [ELXstat](docs/tools/elxstat.md) | 0.1 | ELKS | Read-only firmware and system status |
-| [ELXbat](docs/tools/elxbat.md) | 0.1.3 | ELKS | Large battery-voltage gauges and warning markers |
+| [ELXbat](docs/tools/elxbat.md) | 0.1.4 | ELKS | Large battery-voltage gauges and warning markers |
 | [ELXctl](docs/tools/elxctl.md) | 0.1 | ELKS | Command-line hardware controls |
-| [ELXdash](docs/tools/elxdash.md) | 0.1.1 | ELKS | Battery gauges and interactive controls |
+| [ELXdash](docs/tools/elxdash.md) | 0.2.0-test4 | ELKS | Battery gauges and interactive controls |
 
 ## Install with EPT
 
-Package **0.2.0 is available from [8088retro EPT](http://ept.8088retro.com)**.
+Package **0.2.1 is available from [8088retro EPT](http://ept.8088retro.com)**.
 The [upstream recipe PR](https://github.com/sammothxc/ept/pull/13) has been
 submitted and awaits review; installation from 8088retro is available now.
 
@@ -56,7 +57,7 @@ elxdash --version
 The `elxtools` package installs `/bin/elxstat`, `/bin/elxbat`, `/bin/elxctl`,
 `/bin/elxdash` and license/usage files under `/lib/elxtools`. All installed names
 fit DOS/FAT 8.3. It does not install Cmdr, scrcap, DOS LXdash, a kernel, startup
-scripts or charging settings. `ept remove elxtools` removes the package's files.
+scripts or automatic charging settings. `ept remove elxtools` removes the package's files.
 If you already copied these executables manually, preserve those copies before
 installing: EPT owns and replaces the same `/bin` paths.
 
@@ -69,11 +70,12 @@ The upstream recipe submission and 8088retro package publication are tracked in
 ## Manual download
 
 [Releases](https://github.com/l00nix/HP-200LX-elx-suite/releases) provide the
-four-tool `elxtools-0.2.0-elks.zip`, checksums and build/audit evidence.
+four-tool `elxtools-0.2.1-elks.zip`, checksums and build/audit evidence.
 Copy `bin/` and `lib/` into the matching ELKS directories using a binary-safe
 transfer method, preserving executable permissions. Historical 0.1.x ZIPs contain
 six tools and are not the current package. The package version does not replace
-individual tool versions.
+individual tool versions. Version 0.2.0 used older application snapshots; use
+0.2.1 for the newer dashboard and battery display.
 
 ## ELXdash — how to use
 
@@ -91,6 +93,11 @@ Use ![Tab](docs/assets/keys/tab.svg) to select, then
 ![Minus](docs/assets/keys/minus.svg) / ![Plus](docs/assets/keys/plus.svg) to adjust.
 ![R](docs/assets/keys/r.svg) rereads; ![Q](docs/assets/keys/q.svg) or
 ![Esc](docs/assets/keys/esc.svg) exits.
+
+Press **B** to open the Battery menu; Up/Down/Tab select a row, Left/Right
+adjust a limit, Enter selects and Esc closes. Without `--charge-test`, selecting
+Start reports **Start locked**. The optional NiCd test supervisor is experimental,
+not a validated full-charge controller. [Scope and controls](docs/tools/elxdash.md#experimental-battery-menu).
 
 Contrast and volume gauges reflect read-back values. Text zoom is queued until
 exit; annunciator preference and BIOS timeout also have selectable controls.
@@ -117,7 +124,8 @@ Both graphical tools check the firmware power-status byte once per second.
 The plug and cable indicate external power; a bolt appears only for **active
 charging**. Battery power has a battery symbol; a failed read shows `?` and an
 unknown/stale message. Only the status strip redraws when this reading changes.
-Gauges retain their normal refresh interval. Firmware update latency still needs
+Gauge values are polled at their normal interval; only changed gauge regions
+are redrawn. Unchanged polls leave the display and open menu steady. Firmware update latency still needs
 plug/unplug testing on the HP; polling does not force a fresh measurement.
 
 ![Power indicator states](docs/assets/previews/power-states.png)
@@ -172,7 +180,7 @@ The HP palmtop community's DOS utilities inspired these independent ELKS tools:
 | --- | --- |
 | ELXstat | LXSTAT's hardware and firmware status reports |
 | ELXbat | BATG's main and backup battery-voltage display |
-| ELXctl / ELXdash | CXCTL (Control 1000CX) hardware controls; BATG battery monitoring |
+| ELXctl / ELXdash | CXCTL (Control 1000CX) hardware controls; BATG battery monitoring; ABC/LX charging workflow |
 
 [@l00nix](https://github.com/l00nix)'s HP 200LX book and supplied screenshots/output provided reference
 material. The half-circle gauges follow his requested design direction.

@@ -2,7 +2,7 @@
 #ifndef ELX_H
 #define ELX_H
 #define ELX_VERSION "0.1"
-#define ELX_BAT_VERSION "0.1.3"
+#define ELX_BAT_VERSION "0.1.4"
 #define ELX_POWER_MASK 0x78
 struct elx_status {
     unsigned char bda[256];
@@ -40,5 +40,7 @@ void elx_marker(const struct elx_canvas *c,int cx,int cy,int rx,int ry,unsigned 
 void elx_digits(const struct elx_canvas *c,int cx,int y,int mv);
 void elx_draw(const struct elx_canvas *c,const struct elx_status *s,const char *stamp);
 void elx_power_icon(const struct elx_canvas *c,int x,int y,unsigned flags,int stale);
+void elx_draw_update(const struct elx_canvas *c,const struct elx_status *old,const struct elx_status *s,const char *stamp,int recovered);
+void elx_draw_error(const struct elx_canvas *c,const struct elx_status *s);
 void elx_draw_power(const struct elx_canvas *c,const struct elx_status *s,int stale);
 #endif

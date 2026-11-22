@@ -21,3 +21,6 @@ test: host
 	python3 tests/test_cli.py $(BUILD)
 	$(HOSTCC) $(CFLAGS) -D__ia16__ src/elxbat.c tests/test_power_loop.c -o $(BUILD)/power-loop
 	$(BUILD)/power-loop
+
+	$(HOSTCC) $(CFLAGS) tests/update_preview.c src/gauges.c src/widgets.c src/cga.c src/battery.c -o $(BUILD)/update-preview
+	python3 tests/test_update.py $(BUILD)/update-preview

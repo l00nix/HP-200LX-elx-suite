@@ -3,7 +3,7 @@
 Repository: **l00nix/HP-200LX-elx-suite**, public. Keep current experimental builds
 marked as prereleases until physical HP validation supports a stable release.
 
-Package 0.2.0 contains only the four HP firmware tools. Public EPT builds use
+Package 0.2.1 contains only the four HP firmware tools. Public EPT builds use
 this repository. Historical commits and releases remain available; the split
 of Cmdr and scrcap applies to the current source and 0.2.0 package.
 
